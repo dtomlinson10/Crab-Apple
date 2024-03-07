@@ -25,6 +25,7 @@ namespace CrapApple
         {
             InitializeComponent();
             Debug.WriteLine("Daniel");
+            Debug.WriteLine("matt");
         }
     }
 }
