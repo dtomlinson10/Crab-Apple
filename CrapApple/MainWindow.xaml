@@ -6,7 +6,11 @@
         xmlns:local="clr-namespace:CrapApple"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
+    <Grid RenderTransformOrigin="0.459,0.665">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Label Content="Streak System" FontSize="30" HorizontalContentAlignment="center" HorizontalAlignment="Left" Margin="3,-3,0,0" VerticalAlignment="Top" Height="53" Width="774"/>
     </Grid>
 </Window>
