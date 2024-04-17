@@ -24,7 +24,27 @@ namespace CrapApple
         public MainWindow()
         {
             InitializeComponent();
-            Debug.WriteLine("Hello World.");
+
+            bool loggedIn = false; // Placeholder for debugging
+            Debug.WriteLine("loggedIn = " + loggedIn);
+            // Displays warning if user is not logged in
+            if (loggedIn)
+            {
+                autoAssign.Visibility = Visibility.Visible;
+                ManualAssign.Visibility = Visibility.Visible;
+                notLoggedInError.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                autoAssign.Visibility = Visibility.Hidden;
+                ManualAssign.Visibility = Visibility.Hidden;
+                notLoggedInError.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void AutoAssignChores(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException(Name + " is not implemented yet.");
         }
     }
 }
