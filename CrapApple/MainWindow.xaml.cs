@@ -30,16 +30,26 @@ namespace CrapApple
             // Displays warning if user is not logged in
             if (loggedIn)
             {
-                autoAssign.Visibility = Visibility.Visible;
-                ManualAssign.Visibility = Visibility.Visible;
-                notLoggedInError.Visibility = Visibility.Hidden;
+                ShowAdminFunctionality(this);
             }
             else
             {
-                autoAssign.Visibility = Visibility.Hidden;
-                ManualAssign.Visibility = Visibility.Hidden;
-                notLoggedInError.Visibility = Visibility.Visible;
+                HideAdminFunctionality(this);
             }
+        }
+
+        private void HideAdminFunctionality(MainWindow mainWindow)
+        {
+            autoAssign.Visibility = Visibility.Hidden;
+            ManualAssign.Visibility = Visibility.Hidden;
+            notLoggedInError.Visibility = Visibility.Visible;
+        }
+
+        private void ShowAdminFunctionality(MainWindow mainWindow)
+        {
+            autoAssign.Visibility = Visibility.Visible;
+            ManualAssign.Visibility = Visibility.Visible;
+            notLoggedInError.Visibility = Visibility.Hidden;
         }
 
         private void AutoAssignChores(object sender, RoutedEventArgs e)

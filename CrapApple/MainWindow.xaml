@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CrapApple"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Crab Apple" Height="450" Width="800">
     <Grid>
         <TabControl Margin="0,40,0,0">
             <TabItem x:Name="AssignChores" Header="Assign Chores">
