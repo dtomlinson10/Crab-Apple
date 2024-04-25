@@ -25,9 +25,9 @@ namespace CrapApple
         {
             InitializeComponent();
 
-            bool loggedIn = false; // Placeholder for debugging
-            Debug.WriteLine("loggedIn = " + loggedIn);
-            // Displays warning if user is not logged in
+            Admin administrator = new Admin("Harvey", "001", "password");
+            RegularUser user = new RegularUser("Tom", "002", "password");
+            bool loggedIn = true;
             if (loggedIn)
             {
                 ShowAdminFunctionality(this);
@@ -36,6 +36,8 @@ namespace CrapApple
             {
                 HideAdminFunctionality(this);
             }
+
+            
         }
 
         private void HideAdminFunctionality(MainWindow mainWindow)
