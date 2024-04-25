@@ -24,7 +24,39 @@ namespace CrapApple
         public MainWindow()
         {
             InitializeComponent();
-            Debug.WriteLine("Hello World.");
+
+            Admin administrator = new Admin("Harvey", "001", "password");
+            RegularUser user = new RegularUser("Tom", "002", "password");
+            bool loggedIn = true;
+            if (loggedIn)
+            {
+                ShowAdminFunctionality(this);
+            }
+            else
+            {
+                HideAdminFunctionality(this);
+            }
+
+            
+        }
+
+        private void HideAdminFunctionality(MainWindow mainWindow)
+        {
+            autoAssign.Visibility = Visibility.Hidden;
+            ManualAssign.Visibility = Visibility.Hidden;
+            notLoggedInError.Visibility = Visibility.Visible;
+        }
+
+        private void ShowAdminFunctionality(MainWindow mainWindow)
+        {
+            autoAssign.Visibility = Visibility.Visible;
+            ManualAssign.Visibility = Visibility.Visible;
+            notLoggedInError.Visibility = Visibility.Hidden;
+        }
+
+        private void AutoAssignChores(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException(Name + " is not implemented yet.");
         }
     }
 }
