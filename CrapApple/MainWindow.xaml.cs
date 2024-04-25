@@ -25,9 +25,9 @@ namespace CrapApple
         {
             InitializeComponent();
 
-            Admin administrator = new Admin("Harvey", "001", "password");
-            RegularUser user = new RegularUser("Tom", "002", "password");
-            bool loggedIn = true;
+            Admin administrator = new Admin("001", "Harvey", "Walker", "harveywalker500@gmail.com", "password");
+            //RegularUser user = new RegularUser("Tom", "002", "password");
+            bool loggedIn = false;
             if (loggedIn)
             {
                 ShowAdminFunctionality(this);
