@@ -10,19 +10,23 @@ namespace CrapApple
     {
         string ID;
         string name;
+        string description;
         float weight;
         User assignedUser;
         DateOnly dateOfCompletion;
-        bool completed;
+        bool isCompleted;
+        bool isLate;
 
-        public Chore(string ID, string name, float weight, User assignedUser, DateOnly dateOfCompletion, bool completed)
+        public Chore(string ID, string name, string description, float weight, User assignedUser, DateOnly dateOfCompletion)
         {
             this.ID = ID;
             this.name = name;
+            this.description = description;
             this.weight = weight;
             this.assignedUser = assignedUser;
             this.dateOfCompletion = dateOfCompletion;
-            this.completed = completed;
+            this.isCompleted = false;
+            this.isLate = false;
         }
     }
 }
