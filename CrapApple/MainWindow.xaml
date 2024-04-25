@@ -11,11 +11,11 @@
             <TabItem x:Name="AssignChores" Header="Assign Chores">
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="249*"/>
-                        <ColumnDefinition Width="545*"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Label x:Name="notLoggedInError" Content="Please log in as an Administrator to access this feature!" HorizontalAlignment="Left" Margin="0,165,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-                    <StackPanel x:Name="ManualAssign" HorizontalAlignment="Left" Margin="415,10,0,0" Orientation="Vertical" VerticalAlignment="Top" Grid.Column="1">
+                    <Label x:Name="notLoggedInError" Content="Please log in as an Administrator to access this feature!" HorizontalAlignment="Left" Margin="247,134,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+                    <StackPanel x:Name="ManualAssign" HorizontalAlignment="Left" Margin="267,10,0,0" Orientation="Vertical" VerticalAlignment="Top" Grid.Column="1">
                         <StackPanel.Resources>
                             <Style TargetType="{x:Type FrameworkElement}">
                                 <Setter Property="Margin" Value="0,40,0,0"/>
