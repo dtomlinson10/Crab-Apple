@@ -27,7 +27,7 @@ namespace CrapApple
 
             Admin administrator = new Admin("001", "Harvey", "Walker", "harveywalker500@gmail.com", "password");
             //RegularUser user = new RegularUser("Tom", "002", "password");
-            bool loggedIn = false;
+            bool loggedIn = true;
             if (loggedIn)
             {
                 ShowAdminFunctionality(this);
