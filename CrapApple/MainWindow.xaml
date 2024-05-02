@@ -79,7 +79,6 @@
                         <TextBox x:Name="chorestotal_display" HorizontalAlignment="Left" Height="22" Margin="75,240,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="87" IsReadOnly="True" Background="DarkSeaGreen"/>
                     </Grid>
                     <TextBox x:Name="notloggedInError" HorizontalAlignment="Left" Height="20" Margin="372,196,0,0" TextWrapping="Wrap" Text="Not logged in: login to continue" VerticalAlignment="Top" Width="178" Background="DarkSeaGreen" IsReadOnly="True"/>
-                    <TextBox x:Name="notSelectedError" HorizontalAlignment="Left" Height="35" Margin="353,170,0,0" TextWrapping="Wrap" Text="No one selected: please choose a person to continue!" VerticalAlignment="Top" Width="231" Background="DarkSeaGreen" IsReadOnly="True"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="Statistics" Header="Statistics" Background="Ivory" Margin="0,0,0,0">
