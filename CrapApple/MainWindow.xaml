@@ -20,7 +20,7 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Label x:Name="notLoggedInError" Content="Please log in as an Administrator to access this feature!" HorizontalAlignment="Left" Margin="247,134,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+                    <Label x:Name="assignChoresLoggedInError" Content="Please log in as an Administrator to access this feature!" HorizontalAlignment="Left" Margin="247,134,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
                     <StackPanel x:Name="ManualAssign" HorizontalAlignment="Left" Margin="267,10,0,0" Orientation="Vertical" VerticalAlignment="Top" Grid.Column="1">
                         <StackPanel.Resources>
                             <Style TargetType="{x:Type FrameworkElement}">
@@ -56,12 +56,13 @@
                         <ColumnDefinition/>
                         <ColumnDefinition Width="0*"/>
                     </Grid.ColumnDefinitions>
-                    <Rectangle x:Name="streak_leaderboard_outline" HorizontalAlignment="Left" Height="333" Margin="182,55,0,0" Stroke="Black" VerticalAlignment="Top" Width="578" Grid.RowSpan="2"/>
-                    <Label x:Name="streak_counter_heading" Content="streak counter" HorizontalAlignment="Left" Height="28" Margin="200,24,0,0" VerticalAlignment="Top" Width="96" Background="DarkSeaGreen" Grid.Row="1"/>
-                    <DataGrid x:Name="leaderboard_display" HorizontalAlignment="Left" Height="125" Margin="205,111,0,0" VerticalAlignment="Top" Width="532" d:ItemsSource="{d:SampleData ItemCount=5}" Background="DarkSeaGreen" Grid.RowSpan="2"/>
-                    <Label x:Name="leaderboard_heading" Content="Leaderboard" HorizontalAlignment="Left" Height="28" Margin="200,71,0,0" VerticalAlignment="Top" Width="96" Background="DarkSeaGreen"/>
+                    <Grid x:Name="Leaderboard_Layout_Grid" HorizontalAlignment="Left" Height="208" Margin="200,71,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="537">
+                        <Label x:Name="streak_counter_heading" Content="streak counter" HorizontalAlignment="Left" Height="28" Margin="0,180,0,0" VerticalAlignment="Top" Width="96" Background="DarkSeaGreen"/>
+                        <DataGrid x:Name="leaderboard_display" HorizontalAlignment="Left" Height="125" Margin="5,40,0,0" VerticalAlignment="Top" Width="532" Background="DarkSeaGreen"/>
+                        <Label x:Name="leaderboard_heading" Content="Leaderboard" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="96" Background="DarkSeaGreen"/>
+                    </Grid>
                     <ComboBox x:Name="names_display" HorizontalAlignment="Left" Height="29" Margin="26,18,0,0" VerticalAlignment="Top" Width="200" Background="DarkSeaGreen"  SelectionChanged="names_display_SelectionChanged" />
-                    <Grid HorizontalAlignment="Left" Margin="10,62,0,0" Grid.RowSpan="2" VerticalAlignment="Top">
+                    <Grid x:Name="UserInfoGrid" HorizontalAlignment="Left" Margin="10,62,0,0" Grid.RowSpan="2" VerticalAlignment="Top">
                         <Label x:Name="user_info_heading" Content="User info:" HorizontalAlignment="Left" Height="30" Margin="9,0,0,0" VerticalAlignment="Top" Width="77" Background="DarkSeaGreen"/>
                         <TextBox x:Name="firstname" HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" Text="firstname:&#xA;&#xA;" Width="56" IsReadOnly="True" Background="DarkSeaGreen" VerticalAlignment="Top" Margin="0,40,0,0"/>
                         <TextBox x:Name="firstname_display"  HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" Text="" Width="87" IsReadOnly="True" Background="DarkSeaGreen" VerticalAlignment="Top" Margin="65,40,0,0"/>
@@ -75,10 +76,10 @@
                         <TextBox x:Name="choresassigned_display" HorizontalAlignment="Left" Height="22" Margin="75,188,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="87" IsReadOnly="True" Background="DarkSeaGreen"/>
                         <TextBox x:Name="choresTotal" HorizontalAlignment="Left" Height="40" Margin="0,230,0,0" TextWrapping="Wrap" Text="Chore Total Points:&#xA;&#xA;" VerticalAlignment="Top" Width="69" IsReadOnly="True" Background="DarkSeaGreen"/>
                         <TextBox x:Name="email" HorizontalAlignment="Left" Height="21" Margin="0,278,0,0" TextWrapping="Wrap" Text="Email:&#xA;&#xA;" VerticalAlignment="Top" Width="56" IsReadOnly="True" Background="DarkSeaGreen"/>
-                        <TextBox x:Name="email_display"  HorizontalAlignment="Left" Height="22" Margin="65,278,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="87" IsReadOnly="True" Background="DarkSeaGreen"/>
+                        <TextBox x:Name="email_display"  HorizontalAlignment="Left" Height="22" Margin="65,278,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="177" IsReadOnly="True" Background="DarkSeaGreen"/>
                         <TextBox x:Name="chorestotal_display" HorizontalAlignment="Left" Height="22" Margin="75,240,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="87" IsReadOnly="True" Background="DarkSeaGreen"/>
                     </Grid>
-                    <TextBox x:Name="notloggedInError" HorizontalAlignment="Left" Height="20" Margin="372,196,0,0" TextWrapping="Wrap" Text="Not logged in: login to continue" VerticalAlignment="Top" Width="178" Background="DarkSeaGreen" IsReadOnly="True"/>
+                    <Label x:Name="LogInError" Content="Please log in as an Administrator to access this feature!" HorizontalAlignment="Left" Margin="247,134,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="Statistics" Header="Statistics" Background="Ivory" Margin="0,0,0,0">
@@ -87,14 +88,16 @@
                         <ColumnDefinition Width="0*"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
+                    <Label x:Name="statLogInError" Content="Please log in as an Administrator to access this feature!" HorizontalAlignment="Left" Margin="247,134,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
                 </Grid>
+                
             </TabItem>
         </TabControl>
         <StackPanel x:Name="loginPanel" HorizontalAlignment="Right" Margin="0,10,10,0" Orientation="Horizontal" VerticalAlignment="Top">
             <Label x:Name="loginLabel" Content="Log in"/>
             <TextBox x:Name="loginEmail" TextWrapping="Wrap" Text="Email" Width="120"/>
             <TextBox x:Name="loginPassword" TextWrapping="Wrap" Text="Password" Width="120"/>
-            <Button x:Name="loginButton" Content="Log In"/>
+            <Button x:Name="loginButton" Content="Log In" Click="loginButton_Click"/>
 
         </StackPanel>
 
