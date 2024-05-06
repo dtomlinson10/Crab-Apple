@@ -58,6 +58,7 @@ namespace CrapApple
             names_display.Visibility = Visibility.Hidden;
             UserInfoGrid.Visibility = Visibility.Hidden;    
             LogInError.Visibility = Visibility.Visible;
+            rewards_display_grid.Visibility = Visibility.Hidden;
 
             //setting visibility of stats tab
             statLogInError.Visibility = Visibility.Visible;
@@ -75,6 +76,7 @@ namespace CrapApple
             names_display.Visibility = Visibility.Visible;  
             UserInfoGrid.Visibility = Visibility.Visible;
             LogInError.Visibility = Visibility.Hidden;
+            rewards_display_grid.Visibility = Visibility.Visible;   
 
             //setting the visibility of the stats tab
             statLogInError.Visibility = Visibility.Hidden;
