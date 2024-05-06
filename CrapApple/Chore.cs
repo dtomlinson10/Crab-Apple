@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,25 +9,33 @@ namespace CrapApple
 {
     internal class Chore
     {
-        string ID;
-        string name;
-        string description;
+        String ID;
+        String forename;
+        String surname;
+        String description;
         float weight;
         User assignedUser;
         DateOnly dateOfCompletion;
         bool isCompleted;
         bool isLate;
 
-        public Chore(string ID, string name, string description, float weight, User assignedUser, DateOnly dateOfCompletion)
+        public Chore(String ID, String forename,String surname, String description, float weight, User assignedUser, DateOnly dateOfCompletion, bool isCompleted, bool isLate)
         {
             this.ID = ID;
-            this.name = name;
+            this.forename = forename;
+            this.surname = surname;
             this.description = description;
             this.weight = weight;
             this.assignedUser = assignedUser;
             this.dateOfCompletion = dateOfCompletion;
             this.isCompleted = false;
             this.isLate = false;
+        }
+
+        public void addToDatabase(DbConnection connection)
+        {
+            // db connection needs to be implemented
+            throw new NotImplementedException();
         }
     }
 }

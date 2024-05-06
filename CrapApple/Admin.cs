@@ -15,7 +15,6 @@ namespace CrapApple
         public string password { get; set; }
         public List<Chore> completedChores { get; set; }
         public List<Chore> assignedChores { get; set; }
-        public int choresCompleted { get; set; }
         public int totalChores { get; set; }
 
         public Admin(string id, string forename, string surname, string email, string password)
@@ -27,13 +26,16 @@ namespace CrapApple
             this.password = password;
             this.assignedChores = new List<Chore>();
             this.completedChores = new List<Chore>();
-            this.choresCompleted = 0;
             this.totalChores = 0;
         }
 
         public void completeChore()
         {
             throw new NotImplementedException();
+        }
+        public void accessDatabase()
+        {
+
         }
     }
 }
