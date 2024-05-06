@@ -111,9 +111,7 @@ namespace CrapApple
         //dans code
         private const string V = "";
         private List<RegularUser> personList = new List<RegularUser>();
-        private List<RegularUser> userInfo = new List<RegularUser>();
-        private List<string> box = new List<string>();
-        private List<int> choresCompleted = new List<int>();
+        DateOnly todays_date = new DateOnly();
 
         //function to add details to user info boxes
         private void addUserInfo(string user)
