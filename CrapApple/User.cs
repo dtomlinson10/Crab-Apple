@@ -13,7 +13,7 @@ namespace CrapApple
         String forename { get; }
         String surname { get; }
         String email { get; }
-        List<Chore> assignedChores { get; } // NOTE: THIS MAY NOT BE VIABLE TO PUSH AND PULL TO THE DATABASE!
+        List<Chore> assignedChores { get; }
         List<Chore> completedChores { get; }
         int totalChores { get; }
         String password { get; }

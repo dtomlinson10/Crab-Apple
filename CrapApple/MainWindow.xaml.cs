@@ -18,6 +18,7 @@ namespace CrapApple
         {
             InitializeComponent();
             DataContext = this;
+            
             RefreshTable();
             addUserInfo("daniel");
             choreList = new List<Chore>();
@@ -40,6 +41,18 @@ namespace CrapApple
                 HideAdminFunctionality(this);
             }
             GenerateChores(5);
+            generateDataGrids();
+        }
+
+        private void generateDataGrids()
+        {
+            usersDataGrid.ItemsSource = personList;
+            choresDataGrid.ItemsSource = choreList;
+
+            selectUserCB.DisplayMemberPath = "forename " + "surname"; ;
+            selectUserCB.ItemsSource = personList;
+            selectChoreCB.DisplayMemberPath = "name";
+            selectChoreCB.ItemsSource = personList;
         }
 
         private void HideAdminFunctionality(MainWindow mainWindow)
