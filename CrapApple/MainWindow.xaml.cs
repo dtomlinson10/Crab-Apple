@@ -1,19 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Common;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CrapApple
 {
@@ -22,18 +10,26 @@ namespace CrapApple
     /// </summary>
     public partial class MainWindow : Window
     {
+        private List<RegularUser> personList { get; set; }
+        private List<Chore> choreList { get; set; }
+        DateOnly todays_date { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = this;
             RefreshTable();
             addUserInfo("daniel");
+            choreList = new List<Chore>();
+            personList = new List<RegularUser>();
+            todays_date = new DateOnly();
 
             personList.Clear();
             // adding new people to the personList 
             personList.Add(new RegularUser("001", "Daniel", "Tomlinson", "dtomlinson10@outlook.com", "password"));
             personList.Add(new RegularUser("002", "Harvey", "Walker", "harveywalker500@gmail.com", "password2"));
-            //creating an admin
-            Admin administrator = new Admin("001", "Harvey", "Walker", "harveywalker500@gmail.com", "password");
+
+            Admin administrator = new Admin("101", "Harvey", "Walker", "harveywalker500@gmail.com", "password");
             bool loggedIn = true;
             if (loggedIn)
             {
@@ -43,8 +39,7 @@ namespace CrapApple
             {
                 HideAdminFunctionality(this);
             }
-
-            
+            GenerateChores(5);
         }
 
         private void HideAdminFunctionality(MainWindow mainWindow)
@@ -56,7 +51,7 @@ namespace CrapApple
             // setting the property visibility to hidden or visible depending on the required display for motivation tab
             Leaderboard_Layout_Grid.Visibility = Visibility.Hidden;
             names_display.Visibility = Visibility.Hidden;
-            UserInfoGrid.Visibility = Visibility.Hidden;    
+            UserInfoGrid.Visibility = Visibility.Hidden;
             LogInError.Visibility = Visibility.Visible;
             rewards_display_grid.Visibility = Visibility.Hidden;
 
@@ -73,10 +68,10 @@ namespace CrapApple
 
             // setting the property visibility to hidden or visible depending on the required display for motivation tab
             Leaderboard_Layout_Grid.Visibility = Visibility.Visible;
-            names_display.Visibility = Visibility.Visible;  
+            names_display.Visibility = Visibility.Visible;
             UserInfoGrid.Visibility = Visibility.Visible;
             LogInError.Visibility = Visibility.Hidden;
-            rewards_display_grid.Visibility = Visibility.Visible;   
+            rewards_display_grid.Visibility = Visibility.Visible;
 
             //setting the visibility of the stats tab
             statLogInError.Visibility = Visibility.Hidden;
@@ -87,15 +82,25 @@ namespace CrapApple
             throw new NotImplementedException(Name + " is not implemented yet.");
         }
 
+        private void GenerateChores(int choresToGenerate)
+        {
+            for (int i = 0; i < choresToGenerate; i++)
+            {
+                ChoreGenerationScript choreGenerationScript = new ChoreGenerationScript();
+                Chore chore = choreGenerationScript.GenerateChore();
+                choreList.Add(chore);
+            }
+        }
+
         //login retrieval 
         private void loginButton_Click(object sender, RoutedEventArgs e)
         {
             string email = loginEmail.Text;
             string password = loginPassword.Text;
 
-            if(email != "Email" && password != "Password")
+            if (email != "Email" && password != "Password")
             {
-                if(email == "daniel" && password == "password")
+                if (email == "daniel" && password == "password")
                 {
                     ShowAdminFunctionality(this);
                 }
@@ -112,9 +117,6 @@ namespace CrapApple
 
         //dans code
         private const string V = "";
-        private List<RegularUser> personList = new List<RegularUser>();
-        private List<Chore> choreList = new List<Chore>();
-        DateOnly todays_date = new DateOnly();
         DateOnly date_completed = new DateOnly();
         private int points = 0;
         private User daniel { get; set; }
@@ -122,7 +124,7 @@ namespace CrapApple
         //function to add details to user info boxes
         private void addUserInfo(string user)
         {
-            if(user == null)
+            if (user == null)
             {
                 firstname_display.Text = V;
                 lastname_display.Text = V;
@@ -142,14 +144,14 @@ namespace CrapApple
                 chorestotal_display.Text = user;
                 choresCompleted_display.Text = user;
             }
-            
+
         }
 
         //function to load rewards grid info into the motivation tab on project load 
         // and when someone changes the person they want to view
         private void RewardsInfo_display()
         {
-            choreList.Add(new Chore("001", "daniel", "Tomlinson", "Wash the Dishes",1.50, daniel, date_completed, false, false));
+            choreList.Add(new Chore("001", "Wash the Dishes", "Wash the Dishes", 1.5, daniel, date_completed, false, false));
             this.Rewards_display.ItemsSource = choreList;
 
         }
@@ -168,7 +170,7 @@ namespace CrapApple
 
         private void names_display_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(names_display.SelectedItem != null)
+            if (names_display.SelectedItem != null)
             {
                 addUserInfo(names_display.SelectedItem.ToString());
             }
@@ -176,14 +178,14 @@ namespace CrapApple
 
         private void Collect_Rewards_Button_Click(object sender, RoutedEventArgs e)
         {
-            if(choreList.Count == 0)
+            if (choreList.Count == 0)
             {
                 points += 0;
             }
-           // else if()
-           // {
+            // else if()
+            // {
 
-           // }
+            // }
         }
     }
 }
