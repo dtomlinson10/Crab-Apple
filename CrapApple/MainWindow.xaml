@@ -80,7 +80,7 @@
                     </Grid>
                     <Label x:Name="LogInError" Content="Please log in as an Administrator to access this feature!" HorizontalAlignment="Left" Margin="247,134,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
                     <Grid x:Name="rewards_display_grid" HorizontalAlignment="Left" Height="116" Margin="194,16,0,0" Grid.Row="1" VerticalAlignment="Top" Width="537">
-                        <Button x:Name="Collect_Rewards_Button" Content="Collect points!" HorizontalAlignment="Left" Height="51" Margin="383,40,0,0" VerticalAlignment="Top" Width="150" Background="DarkSeaGreen"/>
+                        <Button x:Name="Collect_Rewards_Button" Content="Collect points!" HorizontalAlignment="Left" Height="51" Margin="383,40,0,0" VerticalAlignment="Top" Width="150" Background="DarkSeaGreen" Click="Collect_Rewards_Button_Click"/>
                         <ListBox x:Name="Rewards_display" HorizontalAlignment="Left" Height="85" Margin="71,30,0,0" VerticalAlignment="Top" Width="179" Background="DarkSeaGreen" d:ItemsSource="{d:SampleData ItemCount=5}"/>
                         <Label x:Name="Rewards_heading" Content="Rewards" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="95" Background="DarkSeaGreen"/>
                         <Label Content="Points collected: &#xA;&#xA;" Margin="254,46,168,32" Background="DarkSeaGreen"/>

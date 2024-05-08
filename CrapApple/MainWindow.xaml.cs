@@ -113,7 +113,11 @@ namespace CrapApple
         //dans code
         private const string V = "";
         private List<RegularUser> personList = new List<RegularUser>();
+        private List<Chore> choreList = new List<Chore>();
         DateOnly todays_date = new DateOnly();
+        DateOnly date_completed = new DateOnly();
+        private int points = 0;
+        private User daniel { get; set; }
 
         //function to add details to user info boxes
         private void addUserInfo(string user)
@@ -141,6 +145,15 @@ namespace CrapApple
             
         }
 
+        //function to load rewards grid info into the motivation tab on project load 
+        // and when someone changes the person they want to view
+        private void RewardsInfo_display()
+        {
+            choreList.Add(new Chore("001", "daniel", "Tomlinson", "Wash the Dishes",1.50, daniel, date_completed, false, false));
+            this.Rewards_display.ItemsSource = choreList;
+
+        }
+
         private void RefreshTable()
         {
             // displaying the firstname of the people in the list 
@@ -159,6 +172,18 @@ namespace CrapApple
             {
                 addUserInfo(names_display.SelectedItem.ToString());
             }
+        }
+
+        private void Collect_Rewards_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if(choreList.Count == 0)
+            {
+                points += 0;
+            }
+           // else if()
+           // {
+
+           // }
         }
     }
 }

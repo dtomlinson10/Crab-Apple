@@ -32,6 +32,10 @@ namespace CrapApple
             this.isLate = false;
         }
 
+        public Chore(string v1, string v2, string v3, string v4, double v5, User daniel, DateOnly date_completed, bool v6, bool v7)
+        {
+        }
+
         public void addToDatabase(DbConnection connection)
         {
             // db connection needs to be implemented
