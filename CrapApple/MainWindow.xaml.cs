@@ -19,7 +19,6 @@ namespace CrapApple
             InitializeComponent();
             DataContext = this;
             
-            RefreshTable();
             addUserInfo("daniel");
             choreList = new List<Chore>();
             personList = new List<RegularUser>();
@@ -49,10 +48,15 @@ namespace CrapApple
             usersDataGrid.ItemsSource = personList;
             choresDataGrid.ItemsSource = choreList;
 
-            selectUserCB.DisplayMemberPath = "forename " + "surname"; ;
+            selectUserCB.DisplayMemberPath = "forename";
             selectUserCB.ItemsSource = personList;
             selectChoreCB.DisplayMemberPath = "name";
             selectChoreCB.ItemsSource = personList;
+
+            // Motivation Tab
+            names_display.ItemsSource = personList;
+            names_display.DisplayMemberPath = "forename";
+            leaderboard_display.ItemsSource = personList;
         }
 
         private void HideAdminFunctionality(MainWindow mainWindow)
@@ -99,8 +103,9 @@ namespace CrapApple
         {
             for (int i = 0; i < choresToGenerate; i++)
             {
+                String choreIDIterator = i.ToString();
                 ChoreGenerationScript choreGenerationScript = new ChoreGenerationScript();
-                Chore chore = choreGenerationScript.GenerateChore();
+                Chore chore = choreGenerationScript.GenerateChore(choreIDIterator, personList[1]);
                 choreList.Add(chore);
             }
         }
@@ -108,6 +113,7 @@ namespace CrapApple
         //login retrieval 
         private void loginButton_Click(object sender, RoutedEventArgs e)
         {
+            // TODO: Update code to link with database
             string email = loginEmail.Text;
             string password = loginPassword.Text;
 
@@ -167,18 +173,6 @@ namespace CrapApple
             choreList.Add(new Chore("001", "Wash the Dishes", "Wash the Dishes", 1.5, daniel, date_completed, false, false));
             this.Rewards_display.ItemsSource = choreList;
 
-        }
-
-        private void RefreshTable()
-        {
-            // displaying the firstname of the people in the list 
-            // in the combo box for selection
-            this.names_display.ItemsSource = personList;
-            this.names_display.DisplayMemberPath = "forename";
-
-            // displaying all the people in the leaderboard 
-            // with all the deatils from the database
-            this.leaderboard_display.ItemsSource = personList;
         }
 
         private void names_display_SelectionChanged(object sender, SelectionChangedEventArgs e)
