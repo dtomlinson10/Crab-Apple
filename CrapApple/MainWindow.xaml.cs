@@ -5,6 +5,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using ScottPlot;
+using ScottPlot.AxisPanels;
+using ScottPlot.WPF;
 
 namespace CrapApple
 {
@@ -21,29 +23,34 @@ namespace CrapApple
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = this;
+            double[] datax = { 1, 2, 3, 4, 5 };
+            double[] datay = { 5, 20, 15, 20, 25 };
+            this.WpfPlot1.Plot.Add.Scatter(datax, datay);
+            this.WpfPlot1.Refresh();
+            /* this.DataContext = this;
+
+             choreList = new List<Chore>();
+             personList = new List<User>();
+             todays_date = new DateOnly();
+
+             // sample person list
+             personList.Add(new RegularUser("001", "Daniel", "Tomlinson", "dtomlinson10@outlook.com", "password"));
+             personList.Add(new RegularUser("002", "Harvey", "Walker", "harveywalker500@gmail.com", "password2"));
+             personList.Add(new Admin("101", "John", "Smith", "harveywalker500@gmail.com", "password"));
+            */
+             bool loggedIn = true;
+             if (loggedIn)
+             {
+                 ShowAdminFunctionality(this);
+             }
+             else
+             {
+                 HideAdminFunctionality(this);
+             }
+            // GenerateChores(5);
+            // generateDataGrids();
+            //  addGraph();
             
-            choreList = new List<Chore>();
-            personList = new List<User>();
-            todays_date = new DateOnly();
-
-            // sample person list
-            personList.Add(new RegularUser("001", "Daniel", "Tomlinson", "dtomlinson10@outlook.com", "password"));
-            personList.Add(new RegularUser("002", "Harvey", "Walker", "harveywalker500@gmail.com", "password2"));
-            personList.Add(new Admin("101", "John", "Smith", "harveywalker500@gmail.com", "password"));
-
-            bool loggedIn = true;
-            if (loggedIn)
-            {
-                ShowAdminFunctionality(this);
-            }
-            else
-            {
-                HideAdminFunctionality(this);
-            }
-            GenerateChores(5);
-            generateDataGrids();
-
         }
 
         private void generateDataGrids()
@@ -144,6 +151,16 @@ namespace CrapApple
         private void assignButton_Click(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine("Assigned " + selectUserCB.Text + " Chore: " + selectChoreCB.Text);
+        }
+
+        //motivation tab
+        private void addGraph()
+        {
+            double[] datax = { 1, 2, 3, 4, 5 };
+            double[] datay = { 5, 20, 15, 20, 25 };
+            //this.WpfPlot1.Plot.Add.Scatter(datax, datay);
+            Debug.WriteLine(this.WpfPlot1.Plot.Add.Scatter(datax, datay));
+            this.WpfPlot1.Refresh();
         }
     }
 }
