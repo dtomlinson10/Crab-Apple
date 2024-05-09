@@ -51,7 +51,7 @@ namespace CrapApple
              GenerateChores(5);
              generateDataGrids();
              addGraph();
-            
+            addRewardsDisplay();
         }
 
         private void generateDataGrids()
