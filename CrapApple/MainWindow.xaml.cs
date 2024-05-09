@@ -23,11 +23,8 @@ namespace CrapApple
         public MainWindow()
         {
             InitializeComponent();
-            double[] datax = { 1, 2, 3, 4, 5 };
-            double[] datay = { 5, 20, 15, 20, 25 };
-            this.WpfPlot1.Plot.Add.Scatter(datax, datay);
-            this.WpfPlot1.Refresh();
-            /* this.DataContext = this;
+            
+             this.DataContext = this;
 
              choreList = new List<Chore>();
              personList = new List<User>();
@@ -37,7 +34,7 @@ namespace CrapApple
              personList.Add(new RegularUser("001", "Daniel", "Tomlinson", "dtomlinson10@outlook.com", "password"));
              personList.Add(new RegularUser("002", "Harvey", "Walker", "harveywalker500@gmail.com", "password2"));
              personList.Add(new Admin("101", "John", "Smith", "harveywalker500@gmail.com", "password"));
-            */
+            
              bool loggedIn = true;
              if (loggedIn)
              {
@@ -47,9 +44,9 @@ namespace CrapApple
              {
                  HideAdminFunctionality(this);
              }
-            // GenerateChores(5);
-            // generateDataGrids();
-            //  addGraph();
+             GenerateChores(5);
+             generateDataGrids();
+             addGraph();
             
         }
 
@@ -158,8 +155,7 @@ namespace CrapApple
         {
             double[] datax = { 1, 2, 3, 4, 5 };
             double[] datay = { 5, 20, 15, 20, 25 };
-            //this.WpfPlot1.Plot.Add.Scatter(datax, datay);
-            Debug.WriteLine(this.WpfPlot1.Plot.Add.Scatter(datax, datay));
+            this.WpfPlot1.Plot.Add.Scatter(datax, datay);
             this.WpfPlot1.Refresh();
         }
     }
