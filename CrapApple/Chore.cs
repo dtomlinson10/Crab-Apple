@@ -9,14 +9,14 @@ namespace CrapApple
 {
     internal class Chore
     {
-        String ID;
-        String name;
-        String description;
-        double weight;
-        User assignedUser;
-        DateOnly dateOfCompletion;
-        bool isCompleted;
-        bool isLate;
+        String ID { get; set; }
+        String name { get; set; }
+        String description { get; set; }
+        double weight { get; set; }
+        User assignedUser { get; set; }
+        DateOnly dateOfCompletion { get; set; }
+        bool isCompleted { get; set; }
+        bool isLate { get; set; }
 
         public Chore(String ID, String name, String description, double weight, User assignedUser, DateOnly dateOfCompletion, bool isCompleted, bool isLate)
         {

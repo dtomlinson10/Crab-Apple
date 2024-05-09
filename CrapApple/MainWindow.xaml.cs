@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -10,26 +11,24 @@ namespace CrapApple
     /// </summary>
     public partial class MainWindow : Window
     {
-        private List<RegularUser> personList { get; set; }
+        private List<User> personList { get; set; }
         private List<Chore> choreList { get; set; }
         DateOnly todays_date { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = this;
+            this.DataContext = this;
             
-            addUserInfo("daniel");
             choreList = new List<Chore>();
-            personList = new List<RegularUser>();
+            personList = new List<User>();
             todays_date = new DateOnly();
 
-            personList.Clear();
-            // adding new people to the personList 
+            // sample person list
             personList.Add(new RegularUser("001", "Daniel", "Tomlinson", "dtomlinson10@outlook.com", "password"));
             personList.Add(new RegularUser("002", "Harvey", "Walker", "harveywalker500@gmail.com", "password2"));
+            personList.Add(new Admin("101", "John", "Smith", "harveywalker500@gmail.com", "password"));
 
-            Admin administrator = new Admin("101", "Harvey", "Walker", "harveywalker500@gmail.com", "password");
             bool loggedIn = true;
             if (loggedIn)
             {
@@ -41,17 +40,18 @@ namespace CrapApple
             }
             GenerateChores(5);
             generateDataGrids();
+
         }
 
         private void generateDataGrids()
         {
+            // Assign Tab
             usersDataGrid.ItemsSource = personList;
             choresDataGrid.ItemsSource = choreList;
-
             selectUserCB.DisplayMemberPath = "forename";
             selectUserCB.ItemsSource = personList;
             selectChoreCB.DisplayMemberPath = "name";
-            selectChoreCB.ItemsSource = personList;
+            selectChoreCB.ItemsSource = choreList;
 
             // Motivation Tab
             names_display.ItemsSource = personList;
@@ -101,10 +101,10 @@ namespace CrapApple
 
         private void GenerateChores(int choresToGenerate)
         {
+            ChoreGenerationScript choreGenerationScript = new ChoreGenerationScript();
             for (int i = 0; i < choresToGenerate; i++)
             {
                 String choreIDIterator = i.ToString();
-                ChoreGenerationScript choreGenerationScript = new ChoreGenerationScript();
                 Chore chore = choreGenerationScript.GenerateChore(choreIDIterator, personList[1]);
                 choreList.Add(chore);
             }
@@ -134,65 +134,9 @@ namespace CrapApple
             }
         }
 
-        //dans code
-        private const string V = "";
-        DateOnly date_completed = new DateOnly();
-        private int points = 0;
-        private User daniel { get; set; }
-
-        //function to add details to user info boxes
-        private void addUserInfo(string user)
+        private void assignButton_Click(object sender, RoutedEventArgs e)
         {
-            if (user == null)
-            {
-                firstname_display.Text = V;
-                lastname_display.Text = V;
-                idDisplay.Text = V;
-                email_display.Text = V;
-                choresassigned_display.Text = V;
-                chorestotal_display.Text = V;
-                choresCompleted_display.Text = V;
-            }
-            else
-            {
-                firstname_display.Text = user;
-                lastname_display.Text = user;
-                idDisplay.Text = user;
-                email_display.Text = user;
-                choresassigned_display.Text = user;
-                chorestotal_display.Text = user;
-                choresCompleted_display.Text = user;
-            }
-
-        }
-
-        //function to load rewards grid info into the motivation tab on project load 
-        // and when someone changes the person they want to view
-        private void RewardsInfo_display()
-        {
-            choreList.Add(new Chore("001", "Wash the Dishes", "Wash the Dishes", 1.5, daniel, date_completed, false, false));
-            this.Rewards_display.ItemsSource = choreList;
-
-        }
-
-        private void names_display_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (names_display.SelectedItem != null)
-            {
-                addUserInfo(names_display.SelectedItem.ToString());
-            }
-        }
-
-        private void Collect_Rewards_Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (choreList.Count == 0)
-            {
-                points += 0;
-            }
-            // else if()
-            // {
-
-            // }
+            Debug.WriteLine("Assigned " + selectUserCB.Text + "Chore: " + selectChoreCB.Text);
         }
     }
 }
