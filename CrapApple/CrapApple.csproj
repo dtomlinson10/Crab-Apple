@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="ScottPlot" Version="5.0.34" />
+    <PackageReference Include="ScottPlot.WPF" Version="5.0.34" />
   </ItemGroup>
 
 </Project>
