@@ -19,6 +19,7 @@ namespace CrapApple
         private List<Chore> choreList { get; set; }
         DateOnly todays_date { get; set; }
         public bool loggedIn { get; set; }
+        private List<String> rewardsList {  get; set; }
 
         public MainWindow()
         {
@@ -29,6 +30,9 @@ namespace CrapApple
              choreList = new List<Chore>();
              personList = new List<User>();
              todays_date = new DateOnly();
+            rewardsList = new List<String>();
+
+
 
              // sample person list
              personList.Add(new RegularUser("001", "Daniel", "Tomlinson", "dtomlinson10@outlook.com", "password"));
@@ -149,8 +153,17 @@ namespace CrapApple
         {
             Debug.WriteLine("Assigned " + selectUserCB.Text + " Chore: " + selectChoreCB.Text);
         }
-
-        //motivation tab
+        // motivation tab
+        private void addRewardsDisplay()
+        {
+            rewardsList.Add("1 chore off!");
+            rewardsList.Add("10 points off voucher!");
+            rewardsList.Add("free pizza!");
+            rewardsList.Add("30 points off voucher!");
+            rewardsList.Add("2 small chores off!");
+            Rewards_display.ItemsSource = rewardsList;
+        }
+        //stats tab
         private void addGraph()
         {
             double[] datax = { 1, 2, 3, 4, 5 };
