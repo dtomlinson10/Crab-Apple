@@ -100,7 +100,9 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Label x:Name="statLogInError" Content="Please log in as an Administrator to access this feature!" HorizontalAlignment="Left" Margin="247,134,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-                    <ScottPlot:WpfPlot x:Name="WpfPlot1" Width="250" Height="150" Margin="15,54,132,162" />
+                    <ScottPlot:WpfPlot x:Name="WpfPlot1" Width="250" Height="150" Margin="14,43,133,173" />
+                    <ScottPlot:WpfPlot x:Name="WpfPlot2" Width="250" Height="150" Margin="275,43,284,188" Grid.ColumnSpan="2" />
+                    <ScottPlot:WpfPlot x:Name="WpfPlot3" Width="250" Height="150" Margin="121,43,26,168" Grid.Column="1" />
                 </Grid>
 
             </TabItem>

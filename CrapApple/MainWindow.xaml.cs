@@ -169,7 +169,11 @@ namespace CrapApple
             double[] datax = { 1, 2, 3, 4, 5 };
             double[] datay = { 5, 20, 15, 20, 25 };
             this.WpfPlot1.Plot.Add.Scatter(datax, datay);
+            this.WpfPlot2.Plot.Add.Bars(datax);
+            this.WpfPlot3.Plot.Add.Pie(datay);
             this.WpfPlot1.Refresh();
+
+
         }
     }
 }
