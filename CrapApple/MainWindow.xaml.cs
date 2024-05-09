@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace CrapApple
 {
@@ -42,6 +43,19 @@ namespace CrapApple
             }
             GenerateChores(5);
             generateDataGrids();
+
+            // Create an instance of the view model
+            var viewModel = new MainWindowViewModel();
+
+            // Set the CurrentUser property based on the logged-in user
+            // Replace the following line with your logic to retrieve the logged-in user
+            viewModel.CurrentUser = new RegularUser("001", "John", "Doe", "john.doe@example.com", "password");
+
+            // Set the data context to the view model instance
+            DataContext = viewModel;
+
+            // Subscribe to the PreviewTextInput event of the weeklyChoresDataGrid
+            weeklyChoresDataGrid.PreviewTextInput += WeeklyChoresDataGrid_PreviewTextInput;
         }
 
         private void generateDataGrids()
@@ -199,6 +213,15 @@ namespace CrapApple
             // {
 
             // }
+        }
+
+        //matts code
+        // Event handler for the PreviewTextInput event of the weeklyChoresDataGrid
+        private void WeeklyChoresDataGrid_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // Validate the input text using the ValidateEstimatedTime method from InputValidationUtil
+            // If input is not valid, set e.Handled to true to prevent the input from being processed
+            e.Handled = !InputValidationUtil.ValidateEstimatedTime(e.Text, out _);
         }
     }
 }
