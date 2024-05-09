@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -14,6 +15,7 @@ namespace CrapApple
         private List<User> personList { get; set; }
         private List<Chore> choreList { get; set; }
         DateOnly todays_date { get; set; }
+        public bool loggedIn { get; set; }
 
         public MainWindow()
         {
@@ -48,6 +50,7 @@ namespace CrapApple
             // Assign Tab
             usersDataGrid.ItemsSource = personList;
             choresDataGrid.ItemsSource = choreList;
+
             selectUserCB.DisplayMemberPath = "forename";
             selectUserCB.ItemsSource = personList;
             selectChoreCB.DisplayMemberPath = "name";
@@ -117,26 +120,29 @@ namespace CrapApple
             string email = loginEmail.Text;
             string password = loginPassword.Text;
 
-            if (email != "Email" && password != "Password")
+            User user = personList.FirstOrDefault(u => u.email == email);
+            if (user != null)
             {
-                if (email == "daniel" && password == "password")
+                if (user.password == password)
                 {
                     ShowAdminFunctionality(this);
                 }
                 else
                 {
                     HideAdminFunctionality(this);
+                    MessageBox.Show("Incorrect password. Please try again.");
                 }
             }
             else
             {
                 HideAdminFunctionality(this);
+                MessageBox.Show("User with this email does not exist.");
             }
         }
 
         private void assignButton_Click(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("Assigned " + selectUserCB.Text + "Chore: " + selectChoreCB.Text);
+            Debug.WriteLine("Assigned " + selectUserCB.Text + " Chore: " + selectChoreCB.Text);
         }
     }
 }
