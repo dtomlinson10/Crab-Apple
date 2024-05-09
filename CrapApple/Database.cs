@@ -92,7 +92,7 @@ namespace CrapApple
         /*public void AddUser(User user)
         {
             //!!!!!!!!!!change for user - our format
-            string sql = $"INSERT INTO Users(id,forename,surname) VALUES ('{user.ID}', '{user.Forename}','{user.Surname}');";
+            string sql = $"INSERT INTO Users(userId,forename,surname,email,assignedChores,completedChores,totalChores,role,password) VALUES ('{user.userId}', '{user.forename}','{user.surname}','{user.email}','{user.assignedChores}','{user.completedChores}','{user.totalChores}','{user.role}','{user.password}');";
 
             // Connect to the database
             DBConnection conn = new DBConnection();
@@ -127,10 +127,9 @@ namespace CrapApple
             conn.Disconnect();
         }
 
-        /*public void AddChore(User user)
+        /*public void AddChore(Chores) chore)
         {
-            //!!!!!!!!!!change for user - our format
-            string sql = $"INSERT INTO Chores(id,forename,surname) VALUES ('{user.ID}', '{user.Forename}','{user.Surname}');";
+            string sql = $"INSERT INTO Chores(choreId,name,description,weight,assignedUser,dateOfCompletion,isCompleted,isLate) VALUES ('{chores.ID}', '{chores.name}','{chores.description}','{chores.weight}','{chores.assignedUser}','{chores.dateOfCompletion}','{chores.isCompleted}','{chores.isLate}');";
 
             // Connect to the database
             DBConnection conn = new DBConnection();
@@ -147,7 +146,7 @@ namespace CrapApple
         }
         */
 
-        public void DeleteUser(string ID)
+        public void DeleteChore(string ID)
         {
             string sql = $"DELETE FROM Chores WHERE id = '{ID}';";
 
