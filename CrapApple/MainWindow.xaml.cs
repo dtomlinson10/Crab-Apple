@@ -129,6 +129,8 @@ namespace CrapApple
             string email = loginEmail.Text;
             string password = loginPassword.Text;
 
+            DBConnection connection = new DBConnection();
+
             User user = personList.FirstOrDefault(u => u.email == email);
             if (user != null)
             {

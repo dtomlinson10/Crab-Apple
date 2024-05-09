@@ -60,47 +60,47 @@
                         <ColumnDefinition Width="0*"/>
                     </Grid.ColumnDefinitions>
                     <Grid x:Name="Leaderboard_Layout_Grid" HorizontalAlignment="Left" Height="208" Margin="200,71,0,0" Grid.RowSpan="2" VerticalAlignment="Top">
-                        <DataGrid x:Name="leaderboard_display" HorizontalAlignment="Left" Height="125" Margin="5,40,0,0" VerticalAlignment="Top" Width="532" Background="DarkSeaGreen"/>
-                        <Label x:Name="leaderboard_heading" Content="Leaderboard" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="96" Background="DarkSeaGreen"/>
+                        <DataGrid x:Name="leaderboard_display" HorizontalAlignment="Left" Height="125" Margin="32,-2,0,0" VerticalAlignment="Top" Width="532" Background="DarkSeaGreen"/>
+                        <Label x:Name="leaderboard_heading" Content="Leaderboard" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="96" Background="DarkSeaGreen" Margin="37,-46,0,0"/>
                     </Grid>
                     <ComboBox x:Name="names_display" HorizontalAlignment="Left" Height="29" Margin="26,18,0,0" VerticalAlignment="Top" Width="200" Background="DarkSeaGreen"  />
                     <Grid x:Name="UserInfoGrid" HorizontalAlignment="Left" Margin="10,62,0,0" Grid.RowSpan="2" VerticalAlignment="Top">
                         <Label x:Name="user_info_heading" Content="User info:" HorizontalAlignment="Left" Height="30" Margin="9,0,0,0" VerticalAlignment="Top" Width="77" Background="DarkSeaGreen"/>
                         <StackPanel x:Name="firstname_stack">
                             <TextBox x:Name="firstname" HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" Text="firstname:&#xA;&#xA;" Width="56" IsReadOnly="True" Background="DarkSeaGreen" VerticalAlignment="Top" Margin="0,40,0,0"/>
-                            <TextBox x:Name="firstname_display" Height="22" TextWrapping="Wrap" Text="" Width="87" IsReadOnly="True" Background="DarkSeaGreen"/>
+                            <TextBox x:Name="firstname_display" Height="22" TextWrapping="Wrap" Text="" Width="86" IsReadOnly="True" Background="DarkSeaGreen" Margin="0,-20,0,0"/>
                         </StackPanel>
                         <StackPanel x:Name="lastname_stack">
                             <TextBox x:Name="lastname" HorizontalAlignment="Left" Height="22" Margin="0,73,0,0" TextWrapping="Wrap" Text="lastname:&#xA;&#xA;" VerticalAlignment="Top" Width="56" IsReadOnly="True" Background="DarkSeaGreen"/>
-                            <TextBox x:Name="lastname_display"  HorizontalAlignment="Left" Height="22" Margin="72,107,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="87" IsReadOnly="True" Background="DarkSeaGreen"/>
+                            <TextBox x:Name="lastname_display"  HorizontalAlignment="Left" Height="22" Margin="80,-22,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="87" IsReadOnly="True" Background="DarkSeaGreen"/>
                         </StackPanel>
                         <StackPanel x:Name="id_stack">
                             <TextBox x:Name="id" HorizontalAlignment="Left" Height="22" Margin="0,103,0,0" TextWrapping="Wrap" Text="ID:&#xA;&#xA;" VerticalAlignment="Top" Width="56" IsReadOnly="True" Background="DarkSeaGreen"/>
-                            <TextBox x:Name="id_display" Height="22" TextWrapping="Wrap" Text="" Width="87" IsReadOnly="True" Background="DarkSeaGreen"/>
+                            <TextBox x:Name="id_display" Height="22" TextWrapping="Wrap" Text="" Width="87" IsReadOnly="True" Background="DarkSeaGreen" Margin="8,-22,0,0"/>
                         </StackPanel>
                         <StackPanel x:Name="choresCompleted_stack">
                             <TextBox x:Name="choresCompleted_label" HorizontalAlignment="Left" Height="40" Margin="0,133,0,0" TextWrapping="Wrap" Text="Chores Completed:&#xA;&#xA;" VerticalAlignment="Top" Width="69" IsReadOnly="True" Background="DarkSeaGreen"/>
-                            <TextBox x:Name="choresCompleted_display" HorizontalAlignment="Left" Height="22" Margin="75,142,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="87" IsReadOnly="True" Background="DarkSeaGreen"/>
+                            <TextBox x:Name="choresCompleted_display" HorizontalAlignment="Left" Height="22" Margin="80,-30,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="87" IsReadOnly="True" Background="DarkSeaGreen"/>
                         </StackPanel>
                         <StackPanel x:Name="choresAssigned_stack">
                             <TextBox x:Name="choresAssigned" HorizontalAlignment="Left" Height="40" Margin="0,180,0,0" TextWrapping="Wrap" Text="Chores Assigned:&#xA;&#xA;" VerticalAlignment="Top" Width="69" IsReadOnly="True" Background="DarkSeaGreen"/>
-                            <TextBox x:Name="choresassigned_display" HorizontalAlignment="Left" Height="22" Margin="75,188,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="87" IsReadOnly="True" Background="DarkSeaGreen"/>
+                            <TextBox x:Name="choresassigned_display" HorizontalAlignment="Left" Height="22" Margin="80,-30,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="87" IsReadOnly="True" Background="DarkSeaGreen"/>
                         </StackPanel>
                         <StackPanel x:Name="choresTotal_stack">
                             <TextBox x:Name="choresTotal" HorizontalAlignment="Left" Height="40" Margin="0,230,0,0" TextWrapping="Wrap" Text="Chore Total Points:&#xA;&#xA;" VerticalAlignment="Top" Width="69" IsReadOnly="True" Background="DarkSeaGreen"/>
-                            <TextBox x:Name="chorestotal_display" HorizontalAlignment="Left" Height="22" Margin="75,240,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="87" IsReadOnly="True" Background="DarkSeaGreen"/>
+                            <TextBox x:Name="chorestotal_display" HorizontalAlignment="Left" Height="22" Margin="80,-30,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="87" IsReadOnly="True" Background="DarkSeaGreen"/>
                         </StackPanel>
                         <StackPanel x:Name="email_stack">
                             <TextBox x:Name="email" HorizontalAlignment="Left" Height="21" Margin="0,278,0,0" TextWrapping="Wrap" Text="Email:&#xA;&#xA;" VerticalAlignment="Top" Width="56" IsReadOnly="True" Background="DarkSeaGreen"/>
-                            <TextBox x:Name="email_display"  HorizontalAlignment="Left" Height="22" Margin="65,278,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="177" IsReadOnly="True" Background="DarkSeaGreen"/>
+                            <TextBox x:Name="email_display"  HorizontalAlignment="Left" Height="22" Margin="80,-22,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="177" IsReadOnly="True" Background="DarkSeaGreen"/>
                         </StackPanel>
                     </Grid>
-                    <Label x:Name="LogInError" Content="Please log in as an Administrator to access this feature!" HorizontalAlignment="Left" Margin="247,134,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+                    <Label x:Name="LogInError" Content="Please log in as an Administrator to access this feature!" HorizontalAlignment="Left" Margin="247,134,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" RenderTransformOrigin="0.652,0.154"/>
                     <Grid x:Name="rewards_display_grid" HorizontalAlignment="Left" Height="116" Margin="194,16,0,0" Grid.Row="1" VerticalAlignment="Top" Width="537">
-                        <Button x:Name="Collect_Rewards_Button" Content="Collect points!" HorizontalAlignment="Left" Height="51" Margin="383,40,0,0" VerticalAlignment="Top" Width="150" Background="DarkSeaGreen"/>
-                        <ListBox x:Name="Rewards_display" HorizontalAlignment="Left" Height="85" Margin="71,30,0,0" VerticalAlignment="Top" Width="179" Background="DarkSeaGreen" d:ItemsSource="{d:SampleData ItemCount=5}"/>
-                        <Label x:Name="Rewards_heading" Content="Rewards" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="95" Background="DarkSeaGreen"/>
-                        <Label Content="Points collected: &#xA;&#xA;" Margin="254,46,168,32" Background="DarkSeaGreen"/>
+                        <Button x:Name="Collect_Rewards_Button" Content="Collect points!" HorizontalAlignment="Left" Height="51" Margin="377,17,0,0" VerticalAlignment="Top" Width="150" Background="DarkSeaGreen"/>
+                        <ListBox x:Name="Rewards_display" HorizontalAlignment="Left" Height="85" Margin="41,2,0,0" VerticalAlignment="Top" Width="179" Background="DarkSeaGreen" d:ItemsSource="{d:SampleData ItemCount=5}"/>
+                        <Label x:Name="Rewards_heading" Content="Rewards" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="95" Background="DarkSeaGreen" Margin="38,-35,0,0"/>
+                        <Label Content="Points collected: &#xA;&#xA;" Margin="239,23,183,55" Background="DarkSeaGreen"/>
                     </Grid>
                 </Grid>
             </TabItem>
@@ -111,9 +111,12 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Label x:Name="statLogInError" Content="Please log in as an Administrator to access this feature!" HorizontalAlignment="Left" Margin="247,134,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-                    <ScottPlot:WpfPlot x:Name="WpfPlot1" Width="250" Height="150" Margin="14,43,133,173" />
-                    <ScottPlot:WpfPlot x:Name="WpfPlot2" Width="250" Height="150" Margin="275,43,284,188" Grid.ColumnSpan="2" />
-                    <ScottPlot:WpfPlot x:Name="WpfPlot3" Width="250" Height="150" Margin="121,43,26,168" Grid.Column="1" />
+                    <ScottPlot:WpfPlot x:Name="WpfPlot1" Width="250" Height="150" Margin="14,55,133,173" Background="DarkSeaGreen" />
+                    <ScottPlot:WpfPlot x:Name="WpfPlot2" Width="250" Height="150" Margin="275,55,284,188" Grid.ColumnSpan="2" Background="DarkSeaGreen" />
+                    <ScottPlot:WpfPlot x:Name="WpfPlot3" Width="250" Height="150" Margin="138,55,9,170" Grid.Column="1" Background="DarkSeaGreen" />
+                    <Label x:Name="scatter_graph_heading" Content="Scatter Graph" HorizontalAlignment="Left" Height="33" Margin="20,13,0,0" VerticalAlignment="Top" Width="119" Background="DarkSeaGreen"/>
+                    <Label x:Name="Pie_chart_heading" Content="Pie Chart" HorizontalAlignment="Left" Height="33" Margin="185,20,0,0" VerticalAlignment="Top" Width="119" Background="DarkSeaGreen" Grid.Column="1"/>
+                    <Label x:Name="Bar_chart_heading" Content="Bar Chart" HorizontalAlignment="Left" Height="33" Margin="285,20,0,0" VerticalAlignment="Top" Width="119" Background="DarkSeaGreen" Grid.ColumnSpan="2"/>
                 </Grid>
 
             </TabItem>
