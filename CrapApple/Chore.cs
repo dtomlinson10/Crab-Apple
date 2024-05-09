@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CrapApple
 {
-    internal class Chore
+    public class Chore
     {
         public String ID { get; set; }
         public String name { get; set; }

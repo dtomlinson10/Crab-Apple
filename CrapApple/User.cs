@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CrapApple
 {
-    internal interface User
+    public interface User
     {
         String id { get; }
         String forename { get; }

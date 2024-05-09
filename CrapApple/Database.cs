@@ -89,10 +89,10 @@ namespace CrapApple
             return dataReader;
         }
 
-        /*public void AddUser(User user)
+        public void AddUser(User user)
         {
             //!!!!!!!!!!change for user - our format
-            string sql = $"INSERT INTO Users(userId,forename,surname,email,assignedChores,completedChores,totalChores,role,password) VALUES ('{user.userId}', '{user.forename}','{user.surname}','{user.email}','{user.assignedChores}','{user.completedChores}','{user.totalChores}','{user.role}','{user.password}');";
+            string sql = $"INSERT INTO Users(userId,forename,surname,email,assignedChores,completedChores,totalChores,role,password) VALUES ('{user.id}', '{user.forename}','{user.surname}','{user.email}','{user.assignedChores}','{user.completedChores}','{user.totalChores}','{"regularUser"}','{user.password}');";
 
             // Connect to the database
             DBConnection conn = new DBConnection();
@@ -107,7 +107,7 @@ namespace CrapApple
             // Disconnect
             conn.Disconnect();
         }
-        */
+        
 
         public void DeleteUser(string ID)
         {
@@ -127,9 +127,9 @@ namespace CrapApple
             conn.Disconnect();
         }
 
-        /*public void AddChore(Chores) chore)
+        public void AddChore(Chore chore)
         {
-            string sql = $"INSERT INTO Chores(choreId,name,description,weight,assignedUser,dateOfCompletion,isCompleted,isLate) VALUES ('{chores.ID}', '{chores.name}','{chores.description}','{chores.weight}','{chores.assignedUser}','{chores.dateOfCompletion}','{chores.isCompleted}','{chores.isLate}');";
+            string sql = $"INSERT INTO Chores(choreId,name,description,weight,assignedUser,dateOfCompletion,isCompleted,isLate) VALUES ('{chore.ID}', '{chore.name}','{chore.description}','{chore.weight}','{chore.assignedUser}','{chore.dateOfCompletion}','{chore.isCompleted}','{chore.isLate}');";
 
             // Connect to the database
             DBConnection conn = new DBConnection();
@@ -144,7 +144,7 @@ namespace CrapApple
             // Disconnect
             conn.Disconnect();
         }
-        */
+        
 
         public void DeleteChore(string ID)
         {
