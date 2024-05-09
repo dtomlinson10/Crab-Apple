@@ -1,0 +1,30 @@
+<!--CustomChoreDialog.xaml-->
+<Window x:Class="CrapApple.CustomChoreDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CrapApple"
+        mc:Ignorable="d"
+        Title="Estimated Time" Height="200" Width="400">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" TextWrapping="Wrap" Text="Enter the estimated time (mins) for the custom chore:" />
+        <Grid Grid.Row="1" Margin="0,10,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="estimatedTimeTextBox" Grid.Column="0" VerticalAlignment="Center" />
+            <TextBlock Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Center" Text="minutes" />
+        </Grid>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Button x:Name="okButton" Content="OK" Width="75" Margin="0,0,10,0" Click="OkButton_Click" IsDefault="True" />
+            <Button x:Name="cancelButton" Content="Cancel" Width="75" IsCancel="True" />
+        </StackPanel>
+    </Grid>
+</Window>
