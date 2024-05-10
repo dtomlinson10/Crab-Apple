@@ -21,7 +21,6 @@ namespace CrapApple
             String noun = nounList[nounIndex];
             String choreName = verb + " the " + noun;
 
-            // Create new chore
             return new Chore(id, choreName, "A chore to " + verb + " the " + noun, 1, assignedUser, DateOnly.FromDateTime(DateTime.Now), false, false);
         }
     }

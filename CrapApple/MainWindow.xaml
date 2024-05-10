@@ -45,7 +45,7 @@
                     <StackPanel x:Name="autoAssign" Grid.ColumnSpan="2" Margin="10,10,0,10" Orientation="Vertical">
                         <DataGrid x:Name="usersDataGrid" d:ItemsSource="{d:SampleData ItemCount=5}"/>
                         <DataGrid x:Name="choresDataGrid" d:ItemsSource="{d:SampleData ItemCount=5}"/>
-                        <Button x:Name="autoAssignButton" Content="Auto Assign" Click="AutoAssignChores" Background="#FF89B2F5"/>
+                        <Button x:Name="autoAssignButton" Content="Auto Assign" Click="AutoAssignChores_Click" Background="#FF89B2F5"/>
                     </StackPanel>
                 </Grid>
             </TabItem>

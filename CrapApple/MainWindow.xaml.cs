@@ -19,38 +19,40 @@ namespace CrapApple
         private List<Chore> choreList { get; set; }
         DateOnly todays_date { get; set; }
         public bool loggedIn { get; set; }
-        private List<String> rewardsList {  get; set; }
+        private List<String> rewardsList { get; set; }
+        public AssignmentSystem assignmentSystem { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
-            
-             this.DataContext = this;
 
-             choreList = new List<Chore>();
-             personList = new List<User>();
-             todays_date = new DateOnly();
+            this.DataContext = this;
+
+            choreList = new List<Chore>();
+            personList = new List<User>();
+            todays_date = new DateOnly();
             rewardsList = new List<String>();
+            assignmentSystem = new AssignmentSystem("AS01", choreList, personList);
 
 
 
-             // sample person list
-             personList.Add(new RegularUser("001", "Daniel", "Tomlinson", "dtomlinson10@outlook.com", "password"));
-             personList.Add(new RegularUser("002", "Harvey", "Walker", "harveywalker500@gmail.com", "password2"));
-             personList.Add(new Admin("101", "John", "Smith", "harveywalker500@gmail.com", "password"));
-            
-             bool loggedIn = true;
-             if (loggedIn)
-             {
-                 ShowAdminFunctionality(this);
-             }
-             else
-             {
-                 HideAdminFunctionality(this);
-             }
-             GenerateChores(5);
-             generateDataGrids();
-             addGraph();
+            // sample person list
+            personList.Add(new RegularUser("001", "Daniel", "Tomlinson", "dtomlinson10@outlook.com", "password"));
+            personList.Add(new RegularUser("002", "Harvey", "Walker", "harveywalker500@gmail.com", "password2"));
+            personList.Add(new Admin("101", "John", "Smith", "harveywalker500@gmail.com", "password"));
+
+            bool loggedIn = true;
+            if (loggedIn)
+            {
+                ShowAdminFunctionality(this);
+            }
+            else
+            {
+                HideAdminFunctionality(this);
+            }
+            GenerateChores(5);
+            generateDataGrids();
+            addGraph();
             addRewardsDisplay();
         }
 
@@ -106,9 +108,21 @@ namespace CrapApple
             statLogInError.Visibility = Visibility.Hidden;
         }
 
-        private void AutoAssignChores(object sender, RoutedEventArgs e)
+        private void AutoAssignChores_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException(Name + " is not implemented yet.");
+            List<Chore> selectedChores = new List<Chore>();
+            foreach (var item in choresDataGrid.SelectedItems)
+            {
+                selectedChores.Add((Chore)item);
+            }
+
+            List<User> selectedUsers = new List<User>();
+            foreach (var item in usersDataGrid.SelectedItems)
+            {
+                selectedUsers.Add((User)item);
+            }
+
+            assignmentSystem.autoAssignChores(selectedChores, selectedUsers);
         }
 
         private void GenerateChores(int choresToGenerate)
