@@ -1,10 +1,7 @@
-﻿//logic & functionality for dialog window when adding custom chore
+﻿//V1
+
+//logic & functionality for dialog window when adding custom chore
 //CustomChoreDialog.xaml.cs
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace CrapApple

@@ -1,39 +1,39 @@
-﻿using System;
+﻿//V1
+
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CrapApple
 {
-    internal class Admin : User
+    public class Admin : User
     {
-        public string id { get; set; }
-        public string forename { get; set; }
-        public string surname { get; set; }
-        public string email { get; set; }
-        public string password { get; set; }
-        public List<Chore> completedChores { get; set; }
-        public List<Chore> assignedChores { get; set; }
-        public int totalChores { get; set; }
+        public string Id { get; set; }
+        public string Forename { get; set; }
+        public string Surname { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public List<Chore> CompletedChores { get; set; }
+        public List<Chore> AssignedChores { get; set; }
+        public int TotalChores { get; set; }
 
         public Admin(string id, string forename, string surname, string email, string password)
         {
-            this.id = id;
-            this.forename = forename;
-            this.surname = surname;
-            this.email = email;
-            this.password = password;
-            this.assignedChores = new List<Chore>();
-            this.completedChores = new List<Chore>();
-            this.totalChores = 0;
+            Id = id;
+            Forename = forename;
+            Surname = surname;
+            Email = email;
+            Password = password;
+            AssignedChores = new List<Chore>();
+            CompletedChores = new List<Chore>();
+            TotalChores = 0;
         }
 
-        public void completeChore()
+        public void CompleteChore()
         {
             throw new NotImplementedException();
         }
-        public void accessDatabase()
+
+        public void AccessDatabase()
         {
             throw new NotImplementedException();
         }

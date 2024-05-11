@@ -59,48 +59,34 @@
                         <ColumnDefinition/>
                         <ColumnDefinition Width="0*"/>
                     </Grid.ColumnDefinitions>
-                    <Grid x:Name="Leaderboard_Layout_Grid" HorizontalAlignment="Left" Height="208" Margin="200,71,0,0" Grid.RowSpan="2" VerticalAlignment="Top">
+                    <Grid x:Name="Leaderboard_Layout_Grid" HorizontalAlignment="Left" Height="208" Margin="200,71,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="537">
                         <DataGrid x:Name="leaderboard_display" HorizontalAlignment="Left" Height="125" Margin="5,40,0,0" VerticalAlignment="Top" Width="532" Background="DarkSeaGreen"/>
                         <Label x:Name="leaderboard_heading" Content="Leaderboard" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="96" Background="DarkSeaGreen"/>
                     </Grid>
-                    <ComboBox x:Name="names_display" HorizontalAlignment="Left" Height="29" Margin="26,18,0,0" VerticalAlignment="Top" Width="200" Background="DarkSeaGreen"  />
+                    <ComboBox x:Name="names_display" HorizontalAlignment="Left" Height="29" Margin="26,18,0,0" VerticalAlignment="Top" Width="200" Background="DarkSeaGreen" SelectionChanged="names_display_SelectionChanged" />
                     <Grid x:Name="UserInfoGrid" HorizontalAlignment="Left" Margin="10,62,0,0" Grid.RowSpan="2" VerticalAlignment="Top">
                         <Label x:Name="user_info_heading" Content="User info:" HorizontalAlignment="Left" Height="30" Margin="9,0,0,0" VerticalAlignment="Top" Width="77" Background="DarkSeaGreen"/>
-                        <StackPanel x:Name="firstname_stack">
-                            <TextBox x:Name="firstname" HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" Text="firstname:&#xA;&#xA;" Width="56" IsReadOnly="True" Background="DarkSeaGreen" VerticalAlignment="Top" Margin="0,40,0,0"/>
-                            <TextBox x:Name="firstname_display" Height="22" TextWrapping="Wrap" Text="" Width="87" IsReadOnly="True" Background="DarkSeaGreen"/>
-                        </StackPanel>
-                        <StackPanel x:Name="lastname_stack">
-                            <TextBox x:Name="lastname" HorizontalAlignment="Left" Height="22" Margin="0,73,0,0" TextWrapping="Wrap" Text="lastname:&#xA;&#xA;" VerticalAlignment="Top" Width="56" IsReadOnly="True" Background="DarkSeaGreen"/>
-                            <TextBox x:Name="lastname_display"  HorizontalAlignment="Left" Height="22" Margin="72,107,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="87" IsReadOnly="True" Background="DarkSeaGreen"/>
-                        </StackPanel>
-                        <StackPanel x:Name="id_stack">
-                            <TextBox x:Name="id" HorizontalAlignment="Left" Height="22" Margin="0,103,0,0" TextWrapping="Wrap" Text="ID:&#xA;&#xA;" VerticalAlignment="Top" Width="56" IsReadOnly="True" Background="DarkSeaGreen"/>
-                            <TextBox x:Name="id_display" Height="22" TextWrapping="Wrap" Text="" Width="87" IsReadOnly="True" Background="DarkSeaGreen"/>
-                        </StackPanel>
-                        <StackPanel x:Name="choresCompleted_stack">
-                            <TextBox x:Name="choresCompleted_label" HorizontalAlignment="Left" Height="40" Margin="0,133,0,0" TextWrapping="Wrap" Text="Chores Completed:&#xA;&#xA;" VerticalAlignment="Top" Width="69" IsReadOnly="True" Background="DarkSeaGreen"/>
-                            <TextBox x:Name="choresCompleted_display" HorizontalAlignment="Left" Height="22" Margin="75,142,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="87" IsReadOnly="True" Background="DarkSeaGreen"/>
-                        </StackPanel>
-                        <StackPanel x:Name="choresAssigned_stack">
-                            <TextBox x:Name="choresAssigned" HorizontalAlignment="Left" Height="40" Margin="0,180,0,0" TextWrapping="Wrap" Text="Chores Assigned:&#xA;&#xA;" VerticalAlignment="Top" Width="69" IsReadOnly="True" Background="DarkSeaGreen"/>
-                            <TextBox x:Name="choresassigned_display" HorizontalAlignment="Left" Height="22" Margin="75,188,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="87" IsReadOnly="True" Background="DarkSeaGreen"/>
-                        </StackPanel>
-                        <StackPanel x:Name="choresTotal_stack">
-                            <TextBox x:Name="choresTotal" HorizontalAlignment="Left" Height="40" Margin="0,230,0,0" TextWrapping="Wrap" Text="Chore Total Points:&#xA;&#xA;" VerticalAlignment="Top" Width="69" IsReadOnly="True" Background="DarkSeaGreen"/>
-                            <TextBox x:Name="chorestotal_display" HorizontalAlignment="Left" Height="22" Margin="75,240,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="87" IsReadOnly="True" Background="DarkSeaGreen"/>
-                        </StackPanel>
-                        <StackPanel x:Name="email_stack">
-                            <TextBox x:Name="email" HorizontalAlignment="Left" Height="21" Margin="0,278,0,0" TextWrapping="Wrap" Text="Email:&#xA;&#xA;" VerticalAlignment="Top" Width="56" IsReadOnly="True" Background="DarkSeaGreen"/>
-                            <TextBox x:Name="email_display"  HorizontalAlignment="Left" Height="22" Margin="65,278,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="177" IsReadOnly="True" Background="DarkSeaGreen"/>
-                        </StackPanel>
+                        <TextBox x:Name="firstname" HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" Text="First Name:" Width="56" IsReadOnly="True" Background="DarkSeaGreen" VerticalAlignment="Top" Margin="0,40,0,0"/>
+                        <TextBox x:Name="firstname_display"  HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" Text="" Width="87" IsReadOnly="True" Background="DarkSeaGreen" VerticalAlignment="Top" Margin="65,40,0,0"/>
+                        <TextBox x:Name="lastname" HorizontalAlignment="Left" Height="22" Margin="0,73,0,0" TextWrapping="Wrap" Text="Last Name:" VerticalAlignment="Top" Width="56" IsReadOnly="True" Background="DarkSeaGreen"/>
+                        <TextBox x:Name="lastname_display"  HorizontalAlignment="Left" Height="22" Margin="65,73,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="87" IsReadOnly="True" Background="DarkSeaGreen"/>
+                        <TextBox x:Name="id" HorizontalAlignment="Left" Height="22" Margin="0,103,0,0" TextWrapping="Wrap" Text="ID:" VerticalAlignment="Top" Width="56" IsReadOnly="True" Background="DarkSeaGreen"/>
+                        <TextBox x:Name="idDisplay"  HorizontalAlignment="Left" Height="22" Margin="65,103,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="87" IsReadOnly="True" Background="DarkSeaGreen"/>
+                        <TextBox x:Name="choresCompleted_label" HorizontalAlignment="Left" Height="40" Margin="0,133,0,0" TextWrapping="Wrap" Text="Chores Completed:" VerticalAlignment="Top" Width="69" IsReadOnly="True" Background="DarkSeaGreen"/>
+                        <TextBox x:Name="choresCompleted_display" HorizontalAlignment="Left" Height="22" Margin="75,142,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="87" IsReadOnly="True" Background="DarkSeaGreen"/>
+                        <TextBox x:Name="choresAssigned" HorizontalAlignment="Left" Height="40" Margin="0,180,0,0" TextWrapping="Wrap" Text="Chores Assigned:" VerticalAlignment="Top" Width="69" IsReadOnly="True" Background="DarkSeaGreen"/>
+                        <TextBox x:Name="choresassigned_display" HorizontalAlignment="Left" Height="22" Margin="75,188,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="87" IsReadOnly="True" Background="DarkSeaGreen"/>
+                        <TextBox x:Name="choresTotal" HorizontalAlignment="Left" Height="40" Margin="0,230,0,0" TextWrapping="Wrap" Text="Chore Total Points:" VerticalAlignment="Top" Width="69" IsReadOnly="True" Background="DarkSeaGreen"/>
+                        <TextBox x:Name="email" HorizontalAlignment="Left" Height="21" Margin="0,278,0,0" TextWrapping="Wrap" Text="Email:" VerticalAlignment="Top" Width="56" IsReadOnly="True" Background="DarkSeaGreen"/>
+                        <TextBox x:Name="email_display"  HorizontalAlignment="Left" Height="22" Margin="65,278,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="177" IsReadOnly="True" Background="DarkSeaGreen"/>
+                        <TextBox x:Name="chorestotal_display" HorizontalAlignment="Left" Height="22" Margin="75,240,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="87" IsReadOnly="True" Background="DarkSeaGreen"/>
                     </Grid>
                     <Label x:Name="LogInError" Content="Please log in as an Administrator to access this feature!" HorizontalAlignment="Left" Margin="247,134,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
                     <Grid x:Name="rewards_display_grid" HorizontalAlignment="Left" Height="116" Margin="194,16,0,0" Grid.Row="1" VerticalAlignment="Top" Width="537">
-                        <Button x:Name="Collect_Rewards_Button" Content="Collect points!" HorizontalAlignment="Left" Height="51" Margin="383,40,0,0" VerticalAlignment="Top" Width="150" Background="DarkSeaGreen"/>
+                        <Button x:Name="Collect_Rewards_Button" Content="Collect points!" HorizontalAlignment="Left" Height="51" Margin="383,40,0,0" VerticalAlignment="Top" Width="150" Background="DarkSeaGreen" Click="Collect_Rewards_Button_Click"/>
                         <ListBox x:Name="Rewards_display" HorizontalAlignment="Left" Height="85" Margin="71,30,0,0" VerticalAlignment="Top" Width="179" Background="DarkSeaGreen" d:ItemsSource="{d:SampleData ItemCount=5}"/>
                         <Label x:Name="Rewards_heading" Content="Rewards" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="95" Background="DarkSeaGreen"/>
-                        <Label Content="Points collected: &#xA;&#xA;" Margin="254,46,168,32" Background="DarkSeaGreen"/>
+                        <Label Content="Points collected:" Margin="254,46,168,32" Background="DarkSeaGreen"/>
                     </Grid>
                 </Grid>
             </TabItem>
@@ -115,12 +101,11 @@
                     <ScottPlot:WpfPlot x:Name="WpfPlot2" Width="250" Height="150" Margin="275,43,284,188" Grid.ColumnSpan="2" />
                     <ScottPlot:WpfPlot x:Name="WpfPlot3" Width="250" Height="150" Margin="121,43,26,168" Grid.Column="1" />
                 </Grid>
-
             </TabItem>
             <TabItem x:Name="ChoreManagement" Header="Chore Management">
                 <Grid>
                     <TabControl>
-                        <!-- Common Chores TabItem -->
+                        <!-- commonChores Tab -->
                         <TabItem x:Name="CommonChoresTabItem" Header="Common Chores">
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -157,7 +142,7 @@
                             </Grid>
                         </TabItem>
 
-                        <!-- customChores Tab -->
+                        <!-- customChores tab -->
                         <TabItem x:Name="CustomChoresTabItem" Header="Custom Chores">
                             <Grid Margin="10">
                                 <Grid.RowDefinitions>
@@ -171,11 +156,10 @@
 
                                 <TextBox x:Name="customChoreTextBox" Grid.Column="0" Margin="0,0,10,0" VerticalAlignment="Center" 
                                  Text="{Binding CustomChoreName, UpdateSourceTrigger=PropertyChanged}"/>
-                                <Button x:Name="addCustomChoreButton" Grid.Column="1" Content="Add" VerticalAlignment="Center" 
-                                Command="{Binding AddCustomChoreCommand}" IsEnabled="{Binding AddCustomChoreCommand.CanExecute}"/>
-
+                                <Button x:Name="addCustomChoreButton" Grid.Column="1" Content="Add" VerticalAlignment="Center"
+								Command="{Binding AddCustomChoreCommand}" IsEnabled="{Binding AddCustomChoreCommand.CanExecute}"/>
                                 <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,0" TextWrapping="Wrap" 
-                                   Text="Enter a custom chore name and click 'Add' to include it in your weekly chore list."/>
+                               Text="Enter a custom chore name and click 'Add' to include it in your weekly chore list."/>
                             </Grid>
                         </TabItem>
 
@@ -183,15 +167,15 @@
                         <TabItem x:Name="WeeklyChoresTabItem" Header="Weekly Chores">
                             <Grid>
                                 <DataGrid x:Name="weeklyChoresDataGrid" Margin="10" ItemsSource="{Binding WeeklyChoresList}" 
-                                  AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="True">
+                              AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="True">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Chore" Binding="{Binding Name}" IsReadOnly="False"/>
                                         <DataGridTextColumn Header="Estimated Time" Binding="{Binding EstimatedTime, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10">
-                                    <Button x:Name="saveButton" Content="Save Weekly Chores" Margin="0,0,10,0"/>
-                                    <Button x:Name="clearButton" Content="Clear Weekly Chores" Command="{Binding ClearWeeklyChoresCommand}"/>
+                                    <Button x:Name="saveButton" Content="Save Weekly Chores" Margin="0,0,10,0" Click="SaveButton_Click"/>
+                                    <Button x:Name="clearButton" Content="Clear Weekly Chores" Command="{Binding ClearWeeklyChoresCommand}" Click="ClearButton_Click"/>
                                 </StackPanel>
                             </Grid>
                         </TabItem>
@@ -202,10 +186,8 @@
         <StackPanel x:Name="loginPanel" HorizontalAlignment="Right" Margin="0,10,10,0" Orientation="Horizontal" VerticalAlignment="Top">
             <Label x:Name="loginLabel" Content="Log in"/>
             <TextBox x:Name="loginEmail" TextWrapping="Wrap" Text="Email" Width="120"/>
-            <TextBox x:Name="loginPassword" TextWrapping="Wrap" Text="Password" Width="120"/>
+            <PasswordBox x:Name="loginPassword" Width="120"/>
             <Button x:Name="loginButton" Content="Log In" Click="loginButton_Click"/>
-
         </StackPanel>
-
     </Grid>
 </Window>

@@ -1,11 +1,13 @@
-﻿using System;
+﻿//V1, only changed namespace variable stuff
+
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls.Primitives;
+using System.Diagnostics;
+using System.Collections.ObjectModel;
 
 namespace CrapApple
 {
@@ -14,12 +16,18 @@ namespace CrapApple
         public String systemID;
         public List<Chore> choreList;
         public List<User> userList;
-        public AssignmentSystem(String systemID, List<Chore> choreList, List<User> userList)
+
+        public AssignmentSystem(String systemID, ObservableCollection<Chore> choreList, ObservableCollection<User> userList)
         {
             this.systemID = systemID;
-            this.userList = userList;
-            this.choreList = choreList;
+            this.userList = new List<User>(userList);
+            this.choreList = new List<Chore>(choreList);
         }
+
+        /// <summary>
+        /// ///////////////
+        /// </summary>
+
 
         public void rankChores(List<Chore> choresList)
         {
@@ -28,11 +36,12 @@ namespace CrapApple
 
         public void autoAssignChores(List<Chore> choresList, List<User> userList)
         {
-            double totalWeight = choresList.Sum(c => c.weight);
+            double totalWeight = choresList.Sum(c => c.Weight);
             double averageWeightPerUser = totalWeight / userList.Count;
 
-            choresList.Sort((c1, c2) => c2.weight.CompareTo(c1.weight));
+            choresList.Sort((c1, c2) => c2.Weight.CompareTo(c1.Weight));
             int currentUserIndex = 0;
+
 
             foreach (Chore chore in choresList)
             {
@@ -41,26 +50,36 @@ namespace CrapApple
                     currentUserIndex = 0;
                 }
 
+
                 User currentUser = userList[currentUserIndex];
-                currentUser.assignedChores.Add(chore);
-                currentUserIndex++;
-                Debug.WriteLine($"Assigned chore {chore.name} to user {currentUser.forename} {currentUser.surname}");
+                if (currentUser is RegularUser regularUser)
+
+                {
+                    regularUser.AssignedChores.Add(chore);
+                    currentUserIndex++;
+                    Debug.WriteLine($"Assigned chore {chore.Name} to user {regularUser.Forename} {regularUser.Surname}");
+                }
             }
 
             StringBuilder sb = new StringBuilder();
             foreach (User user in userList)
             {
-                sb.Append($"{user.forename} {user.surname} has been assigned the following chores: ");
-                foreach (Chore chore in user.assignedChores)
+
+                if (user is RegularUser regularUser)
                 {
-                    sb.Append($"{chore.name}, ");
+                    sb.Append($"{regularUser.Forename} {regularUser.Surname} has been assigned the following chores: ");
+                    foreach (Chore chore in regularUser.AssignedChores)
+                    {
+                        sb.Append($"{chore.Name}, ");
+                    }
+
+
+                    sb.Append("\n");
                 }
-                sb.Append("\n");
             }
             MessageBox.Show(sb.ToString(), "Success!");
 
             // Commit changes to the database
-
         }
     }
 }

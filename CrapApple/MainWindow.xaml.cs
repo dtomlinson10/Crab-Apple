@@ -1,111 +1,216 @@
-﻿using System;
+﻿//V1
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using ScottPlot;
-using ScottPlot.AxisPanels;
 using ScottPlot.WPF;
 
 namespace CrapApple
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        private List<User> personList { get; set; }
-        private List<Chore> choreList { get; set; }
-        DateOnly todays_date { get; set; }
-        public bool loggedIn { get; set; }
+        private MainWindowViewModel _viewModel;
         private List<String> rewardsList { get; set; }
-        public AssignmentSystem assignmentSystem { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
+            //create an instance of the view model, set data context
+            _viewModel = new MainWindowViewModel();
+            DataContext = _viewModel;
 
-            this.DataContext = this;
-
-            choreList = new List<Chore>();
-            personList = new List<User>();
-            todays_date = new DateOnly();
-            rewardsList = new List<String>();
-            assignmentSystem = new AssignmentSystem("AS01", choreList, personList);
-
-
-
-            // sample person list
-            personList.Add(new RegularUser("001", "Daniel", "Tomlinson", "dtomlinson10@outlook.com", "password"));
-            personList.Add(new RegularUser("002", "Harvey", "Walker", "harveywalker500@gmail.com", "password2"));
-            personList.Add(new Admin("101", "John", "Smith", "harveywalker500@gmail.com", "password"));
-
-            bool loggedIn = true;
-            if (loggedIn)
-            {
-                ShowAdminFunctionality(this);
-            }
-            else
-            {
-                HideAdminFunctionality(this);
-            }
-            GenerateChores(5);
-            generateDataGrids();
-            addGraph();
+            InitializeData();
+            SetInitialVisibility();
             addRewardsDisplay();
+            addGraph();
         }
 
-        private void generateDataGrids()
+        private void InitializeData()
         {
-            // Assign Tab
-            usersDataGrid.ItemsSource = personList;
-            choresDataGrid.ItemsSource = choreList;
+            //clear the PersonList in the view model and add people
+            _viewModel.PersonList.Clear();
+            _viewModel.PersonList.Add(new RegularUser("001", "Daniel", "Tomlinson", "dtomlinson10@outlook.com", "password"));
+            _viewModel.PersonList.Add(new Admin("002", "Harvey", "Walker", "harveywalker500@gmail.com", "password2"));
+            _viewModel.PersonList.Add(new RegularUser("101", "John", "Smith", "harveywalker500@gmail.com", "password"));
+            _viewModel.PersonList.Add(new Admin("102", "Matt", "Taylor", "matt@gmail.com", "password"));
 
-            selectUserCB.DisplayMemberPath = "forename";
-            selectUserCB.ItemsSource = personList;
-            selectChoreCB.DisplayMemberPath = "name";
-            selectChoreCB.ItemsSource = choreList;
-
-            // Motivation Tab
-            names_display.ItemsSource = personList;
-            names_display.DisplayMemberPath = "forename";
-            leaderboard_display.ItemsSource = personList;
+            //generates sample chores and populate the data grids
+            _viewModel.GenerateChores(5);
+            GenerateDataGrids();
         }
 
-        private void HideAdminFunctionality(MainWindow mainWindow)
+        private void SetInitialVisibility()
         {
-            autoAssign.Visibility = Visibility.Hidden;
-            ManualAssign.Visibility = Visibility.Hidden;
+            //set the IsAdmin property in the view model to false and hide admin mode
+            _viewModel.IsAdmin = false;
+            HideAdminFunctionality();
+        }
+
+        private void GenerateDataGrids()
+        {
+            //set the data sources for various data grids and combo boxes
+            usersDataGrid.ItemsSource = _viewModel.PersonList;
+            choresDataGrid.ItemsSource = _viewModel.ChoreList;
+
+            selectUserCB.DisplayMemberPath = "FullName";
+            selectUserCB.ItemsSource = _viewModel.PersonList;
+            selectChoreCB.DisplayMemberPath = "Name";
+            selectChoreCB.ItemsSource = _viewModel.ChoreList;
+
+            names_display.ItemsSource = _viewModel.PersonList;
+            names_display.DisplayMemberPath = "Forename";
+            leaderboard_display.ItemsSource = _viewModel.PersonList;
+        }
+
+        private void HideAdminFunctionality()
+        {
+            //hide or disable UI elements related to admin
+            autoAssign.Visibility = Visibility.Collapsed;
+            ManualAssign.Visibility = Visibility.Collapsed;
             assignChoresLoggedInError.Visibility = Visibility.Visible;
 
-            // setting the property visibility to hidden or visible depending on the required display for motivation tab
-            Leaderboard_Layout_Grid.Visibility = Visibility.Hidden;
-            names_display.Visibility = Visibility.Hidden;
-            UserInfoGrid.Visibility = Visibility.Hidden;
+            Leaderboard_Layout_Grid.Visibility = Visibility.Collapsed;
+            names_display.Visibility = Visibility.Collapsed;
+            UserInfoGrid.Visibility = Visibility.Collapsed;
             LogInError.Visibility = Visibility.Visible;
-            rewards_display_grid.Visibility = Visibility.Hidden;
+            rewards_display_grid.Visibility = Visibility.Collapsed;
 
-            //setting visibility of stats tab
             statLogInError.Visibility = Visibility.Visible;
 
+            AssignChores.Visibility = Visibility.Collapsed;
+            Motivation.Visibility = Visibility.Collapsed;
+            Statistics.Visibility = Visibility.Collapsed;
+
+            ChoreManagement.Visibility = Visibility.Visible;
+            ChoreManagement.IsEnabled = false;
+            CommonChoresTabItem.Visibility = Visibility.Collapsed;
+            CustomChoresTabItem.Visibility = Visibility.Collapsed;
+            WeeklyChoresTabItem.Visibility = Visibility.Visible;
+            weeklyChoresDataGrid.IsReadOnly = true;
+
+            saveButton.Visibility = Visibility.Collapsed;
+            clearButton.Visibility = Visibility.Collapsed;
         }
 
-        private void ShowAdminFunctionality(MainWindow mainWindow)
+        private void ShowAdminFunctionality()
         {
+            //shows UI elements in admin
             autoAssign.Visibility = Visibility.Visible;
             ManualAssign.Visibility = Visibility.Visible;
-            assignChoresLoggedInError.Visibility = Visibility.Hidden;
+            assignChoresLoggedInError.Visibility = Visibility.Collapsed;
 
-            // setting the property visibility to hidden or visible depending on the required display for motivation tab
             Leaderboard_Layout_Grid.Visibility = Visibility.Visible;
             names_display.Visibility = Visibility.Visible;
             UserInfoGrid.Visibility = Visibility.Visible;
-            LogInError.Visibility = Visibility.Hidden;
+            LogInError.Visibility = Visibility.Collapsed;
             rewards_display_grid.Visibility = Visibility.Visible;
 
-            //setting the visibility of the stats tab
-            statLogInError.Visibility = Visibility.Hidden;
+            statLogInError.Visibility = Visibility.Collapsed;
+
+            AssignChores.Visibility = Visibility.Visible;
+            Motivation.Visibility = Visibility.Visible;
+            Statistics.Visibility = Visibility.Visible;
+
+            ChoreManagement.Visibility = Visibility.Visible;
+            ChoreManagement.IsEnabled = true;
+            CommonChoresTabItem.Visibility = Visibility.Visible;
+            CustomChoresTabItem.Visibility = Visibility.Visible;
+            WeeklyChoresTabItem.Visibility = Visibility.Visible;
+            weeklyChoresDataGrid.IsReadOnly = false;
+
+            saveButton.Visibility = Visibility.Visible;
+            clearButton.Visibility = Visibility.Visible;
+        }
+
+        private void loginButton_Click(object sender, RoutedEventArgs e)
+        {
+            //get the email and password from the login controls
+            string email = loginEmail.Text;
+            string password = loginPassword.Password;
+
+            User user = _viewModel.PersonList.FirstOrDefault(u => u.Email == email);
+            if (user != null)
+            {
+                if (user.Password == password)
+                {
+                    _viewModel.IsAdmin = true;
+                    ShowAdminFunctionality();
+                }
+                else
+                {
+                    MessageBox.Show("Incorrect password. Please try again.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("User with this email does not exist.");
+            }
+        }
+
+        private void names_display_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //when a user is selected in the names_display list
+            if (names_display.SelectedItem != null)
+            {
+                //get the selected user from the list
+                RegularUser selectedUser = (RegularUser)names_display.SelectedItem;
+                //set the SelectedUser property in the view model
+                _viewModel.SelectedUser = selectedUser;
+                //update the user information displays
+                UpdateUserInfo();
+            }
+        }
+
+        private void UpdateUserInfo()
+        {
+            //update the user info displays based on user selected
+            if (_viewModel.SelectedUser != null)
+            {
+                firstname_display.Text = _viewModel.SelectedUser.Forename;
+                lastname_display.Text = _viewModel.SelectedUser.Surname;
+                idDisplay.Text = _viewModel.SelectedUser.Id;
+                email_display.Text = _viewModel.SelectedUser.Email;
+                choresassigned_display.Text = _viewModel.SelectedUser.AssignedChores.Count.ToString();
+                chorestotal_display.Text = _viewModel.SelectedUser.TotalChores.ToString();
+                choresCompleted_display.Text = _viewModel.SelectedUser.CompletedChores.Count.ToString();
+            }
+            else
+            {
+                //clear the user info displays if no user is selected
+                firstname_display.Text = string.Empty;
+                lastname_display.Text = string.Empty;
+                idDisplay.Text = string.Empty;
+                email_display.Text = string.Empty;
+                choresassigned_display.Text = string.Empty;
+                chorestotal_display.Text = string.Empty;
+                choresCompleted_display.Text = string.Empty;
+            }
+        }
+
+        private void WeeklyChoresDataGrid_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            //validate user input in the WeeklyChoresDataGrid based on estimated time
+            e.Handled = !InputValidationUtil.ValidateEstimatedTime(e.Text, out _);
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.SaveWeeklyChores();
+        }
+
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.ClearWeeklyChores();
+        }
+
+        private void Collect_Rewards_Button_Click(object sender, RoutedEventArgs e)
+        {
+            //add logic
         }
 
         private void AutoAssignChores_Click(object sender, RoutedEventArgs e)
@@ -122,54 +227,17 @@ namespace CrapApple
                 selectedUsers.Add((User)item);
             }
 
-            assignmentSystem.autoAssignChores(selectedChores, selectedUsers);
-        }
-
-        private void GenerateChores(int choresToGenerate)
-        {
-            ChoreGenerationScript choreGenerationScript = new ChoreGenerationScript();
-            for (int i = 0; i < choresToGenerate; i++)
-            {
-                String choreIDIterator = i.ToString();
-                Chore chore = choreGenerationScript.GenerateChore(choreIDIterator, personList[1]);
-                choreList.Add(chore);
-            }
-        }
-
-        //login retrieval 
-        private void loginButton_Click(object sender, RoutedEventArgs e)
-        {
-            // TODO: Update code to link with database
-            string email = loginEmail.Text;
-            string password = loginPassword.Text;
-
-            User user = personList.FirstOrDefault(u => u.email == email);
-            if (user != null)
-            {
-                if (user.password == password)
-                {
-                    ShowAdminFunctionality(this);
-                }
-                else
-                {
-                    HideAdminFunctionality(this);
-                    MessageBox.Show("Incorrect password. Please try again.");
-                }
-            }
-            else
-            {
-                HideAdminFunctionality(this);
-                MessageBox.Show("User with this email does not exist.");
-            }
+            _viewModel.AssignmentSystem.autoAssignChores(selectedChores, selectedUsers);
         }
 
         private void assignButton_Click(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine("Assigned " + selectUserCB.Text + " Chore: " + selectChoreCB.Text);
         }
-        // motivation tab
+
         private void addRewardsDisplay()
         {
+            rewardsList = new List<String>();
             rewardsList.Add("1 chore off!");
             rewardsList.Add("10 points off voucher!");
             rewardsList.Add("free pizza!");
@@ -177,7 +245,7 @@ namespace CrapApple
             rewardsList.Add("2 small chores off!");
             Rewards_display.ItemsSource = rewardsList;
         }
-        //stats tab
+
         private void addGraph()
         {
             double[] datax = { 1, 2, 3, 4, 5 };
@@ -186,8 +254,6 @@ namespace CrapApple
             this.WpfPlot2.Plot.Add.Bars(datax);
             this.WpfPlot3.Plot.Add.Pie(datay);
             this.WpfPlot1.Refresh();
-
-
         }
     }
 }

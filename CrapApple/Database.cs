@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data.SQLite;
 using System.Diagnostics;
-using System.Data.Entity;
 
 namespace CrapApple
 {
@@ -12,7 +11,6 @@ namespace CrapApple
         public void Connect(string crabapple)
         {
             m_sqliteConnection = new SQLiteConnection($"Data Source={crabapple}; foreign_keys=true;");
-
 
             try
             {
@@ -44,8 +42,7 @@ namespace CrapApple
             {
                 try
                 {
-                    SQLiteCommand SQLcommand =
-                    m_sqliteConnection.CreateCommand();
+                    SQLiteCommand SQLcommand = m_sqliteConnection.CreateCommand();
                     SQLcommand.CommandText = sql;
                     SQLcommand.ExecuteNonQuery();
                     return true;
@@ -60,7 +57,7 @@ namespace CrapApple
             else
             {
                 Debug.WriteLine($"Can't run '{sql}'. You need to connect to a database first.");
-            return false;
+                return false;
             }
         }
 
@@ -71,10 +68,9 @@ namespace CrapApple
             {
                 try
                 {
-                    SQLiteCommand SQLcommand =
-                    m_sqliteConnection.CreateCommand();
+                    SQLiteCommand SQLcommand = m_sqliteConnection.CreateCommand();
                     SQLcommand.CommandText = sql;
-                    dataReader = SQLcommand.ExecuteReader();
+                    dataReader = SQLcommand.ExecuteReader(); //small change here, this way can use data reader in other parts of code / pass it
                 }
                 catch (SQLiteException ex)
                 {
@@ -91,23 +87,24 @@ namespace CrapApple
 
         public void AddUser(User user)
         {
-            //!!!!!!!!!!change for user - our format
-            string sql = $"INSERT INTO Users(userId,forename,surname,email,assignedChores,completedChores,totalChores,role,password) VALUES ('{user.id}', '{user.forename}','{user.surname}','{user.email}','{user.assignedChores}','{user.completedChores}','{user.totalChores}','{"regularUser"}','{user.password}');";
-
-            // Connect to the database
-            DBConnection conn = new DBConnection();
-            conn.Connect("Database/crabapple.db");
-
-            // Run the SQL
-            if (conn.RunSQL(sql) == false)
+            if (user is RegularUser regularUser)
             {
-                Debug.WriteLine("Could not insert in AddUser");
-            }
+                string sql = $"INSERT INTO Users(userId,forename,surname,email,assignedChores,completedChores,totalChores,role,password) VALUES ('{regularUser.Id}', '{regularUser.Forename}','{regularUser.Surname}','{regularUser.Email}','{regularUser.AssignedChores.Count}','{regularUser.CompletedChores.Count}','{regularUser.TotalChores}','{"regularUser"}','{regularUser.Password}');";
 
-            // Disconnect
-            conn.Disconnect();
+                // Connect to the database
+                DBConnection conn = new DBConnection();
+                conn.Connect("Database/crabapple.db");
+
+                // Run the SQL
+                if (conn.RunSQL(sql) == false)
+                {
+                    Debug.WriteLine("Could not insert in AddUser");
+                }
+
+                // Disconnect
+                conn.Disconnect();
+            }
         }
-        
 
         public void DeleteUser(string ID)
         {
@@ -129,7 +126,7 @@ namespace CrapApple
 
         public void AddChore(Chore chore)
         {
-            string sql = $"INSERT INTO Chores(choreId,name,description,weight,assignedUser,dateOfCompletion,isCompleted,isLate) VALUES ('{chore.ID}', '{chore.name}','{chore.description}','{chore.weight}','{chore.assignedUser}','{chore.dateOfCompletion}','{chore.isCompleted}','{chore.isLate}');";
+            string sql = $"INSERT INTO Chores(choreId,name,description,weight,assignedUser,dateOfCompletion,isCompleted,isLate) VALUES ('{chore.ID}', '{chore.Name}','{chore.Description}','{chore.Weight}','{chore.AssignedUser?.Id ?? ""}','{chore.DateOfCompletion}','{chore.IsCompleted}','{chore.IsLate}');";
 
             // Connect to the database
             DBConnection conn = new DBConnection();
@@ -144,7 +141,6 @@ namespace CrapApple
             // Disconnect
             conn.Disconnect();
         }
-        
 
         public void DeleteChore(string ID)
         {

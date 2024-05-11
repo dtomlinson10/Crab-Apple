@@ -1,4 +1,6 @@
-﻿//Methods to validate user input, specifically when entering an estimated time for a custom chore.
+﻿//V1
+
+//methods to validate user input, specifically when entering an estimated time for a custom chore.
 //InputValidation.cs
 using System;
 using System.Collections.Generic;
