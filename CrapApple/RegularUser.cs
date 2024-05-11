@@ -26,9 +26,13 @@ namespace CrapApple
             TotalChores = 0;
         }
 
-        public void CompleteChore()
+        public void CompleteChore(Chore choreToComplete, DBConnection db)
         {
-            throw new NotImplementedException();
+            choreToComplete.IsCompleted = true;
+            AssignedChores.Remove(choreToComplete);
+            CompletedChores.Add(choreToComplete);
+
+            db.RunSQL("UPDATE Chores SET IsCompleted = 1 WHERE Id = " + choreToComplete.ID);
         }
     }
 }

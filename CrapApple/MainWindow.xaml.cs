@@ -24,6 +24,8 @@ namespace CrapApple
             _viewModel = new MainWindowViewModel();
             DataContext = _viewModel;
 
+            DBConnection dBConnection = new();
+
             InitializeData();
             SetInitialVisibility();
             addRewardsDisplay();
@@ -232,7 +234,14 @@ namespace CrapApple
 
         private void assignButton_Click(object sender, RoutedEventArgs e)
         {
+            User selectedUser = (User)selectUserCB.SelectedItem;
+            Chore selectedChore = (Chore)selectChoreCB.SelectedItem;
+
+            selectedUser.AssignedChores.Add(selectedChore);
             Debug.WriteLine("Assigned " + selectUserCB.Text + " Chore: " + selectChoreCB.Text);
+
+            DBConnection connection = new DBConnection();
+            connection.RunSQL("UPDATE Users SET AssignedChores = " + selectedChore.ID + " WHERE ID = " + selectedUser.Id);
         }
 
         private void addRewardsDisplay()

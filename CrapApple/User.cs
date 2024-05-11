@@ -5,15 +5,15 @@ namespace CrapApple
 {
     public interface User
     {
-        string Id { get; }
-        string Forename { get; }
-        string Surname { get; }
-        string Email { get; }
-        List<Chore> AssignedChores { get; }
-        List<Chore> CompletedChores { get; }
-        int TotalChores { get; }
-        string Password { get; }
+        public string Id { get; }
+        public string Forename { get; }
+        public string Surname { get; }
+        public string Email { get; }
+        public List<Chore> AssignedChores { get; }
+        public List<Chore> CompletedChores { get; }
+        public int TotalChores { get; }
+        public string Password { get; }
 
-        void CompleteChore();
+        void CompleteChore(Chore choreToComplete, DBConnection db);
     }
 }
