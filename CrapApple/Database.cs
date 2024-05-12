@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using System.Diagnostics;
 
@@ -150,9 +151,9 @@ namespace CrapApple
             conn.Disconnect();
         }
 
-        public List<User> GetUsers()
+        public ObservableCollection<User> GetUsers()
         {
-            List<User> users = new List<User>();
+            ObservableCollection<User> users = new ObservableCollection<User>();
             string sql = $"SELECT * FROM Users;";
 
             DBConnection conn = new DBConnection();
