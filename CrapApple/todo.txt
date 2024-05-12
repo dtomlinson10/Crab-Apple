@@ -2,8 +2,6 @@ TODO LIST:
 
 Dan:
 - Add tutorial
-- Add headings to graphs
-- Make graphs work (lmao)
 - Collect points button & points display
 
 Harvey: 

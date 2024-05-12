@@ -25,6 +25,18 @@ namespace CrapApple
             CompletedChores = new List<Chore>();
             TotalChores = 0;
         }
+        
+        public RegularUser(string id, string forename, string surname, string email, string password, List<Chore> completedChores, List<Chore> assignedChores, int totalChores)
+        {
+            Id = id;
+            Forename = forename;
+            Surname = surname;
+            Email = email;
+            Password = password;
+            CompletedChores = completedChores;
+            AssignedChores = assignedChores;
+            TotalChores = totalChores;
+        }
 
         public void CompleteChore(Chore choreToComplete, DBConnection db)
         {

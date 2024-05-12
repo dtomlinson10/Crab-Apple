@@ -12,8 +12,8 @@ namespace CrapApple
         public string Surname { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public List<Chore> CompletedChores { get; set; }
-        public List<Chore> AssignedChores { get; set; }
+        public List<Chore>? CompletedChores { get; set; }
+        public List<Chore>? AssignedChores { get; set; }
         public int TotalChores { get; set; }
 
         public Admin(string id, string forename, string surname, string email, string password)
@@ -26,6 +26,18 @@ namespace CrapApple
             AssignedChores = new List<Chore>();
             CompletedChores = new List<Chore>();
             TotalChores = 0;
+        }
+
+        public Admin(string id, string forename, string surname, string email, string password, List<Chore> completedChores, List<Chore> assignedChores, int totalChores)
+        {
+            Id = id;
+            Forename = forename;
+            Surname = surname;
+            Email = email;
+            Password = password;
+            CompletedChores = completedChores;
+            AssignedChores = assignedChores;
+            TotalChores = totalChores;
         }
 
         public void CompleteChore(Chore choreToComplete, DBConnection db)
