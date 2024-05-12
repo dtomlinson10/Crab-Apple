@@ -32,7 +32,7 @@ namespace CrapApple
             AssignedChores.Remove(choreToComplete);
             CompletedChores.Add(choreToComplete);
 
-            db.RunSQL("UPDATE Chores SET IsCompleted = 1 WHERE Id = " + choreToComplete.ID);
+            db.RunSQL("UPDATE Chores SET IsCompleted = 1 WHERE ChoreId = " + choreToComplete.ID);
         }
     }
 }

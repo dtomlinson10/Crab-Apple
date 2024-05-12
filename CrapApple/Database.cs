@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Diagnostics;
 
@@ -106,6 +107,31 @@ namespace CrapApple
             }
         }
 
+        public void ModifyUser(User user)
+        {
+            string sql;
+            if (user is Admin)
+            {
+                Admin adminUser = (Admin)user;
+                sql = $"UPDATE Users SET forename = '{adminUser.Forename}', surname = '{adminUser.Surname}', email = '{adminUser.Email}', assignedChores = '{adminUser.AssignedChores}', completedChores = '{adminUser.CompletedChores}', totalChores = '{adminUser.TotalChores}', role = 'admin', password = '{adminUser.Password}' WHERE id = '{adminUser.Id}';";
+            }
+            else
+            {
+                RegularUser regularUser = (RegularUser)user;
+                sql = $"UPDATE Users SET forename = '{regularUser.Forename}', surname = '{regularUser.Surname}', email = '{regularUser.Email}', assignedChores = '{regularUser.AssignedChores}', completedChores = '{regularUser.CompletedChores}', totalChores = '{regularUser.TotalChores}', role = 'user', password = '{regularUser.Password}' WHERE id = '{regularUser.Id}';";
+            }
+
+            DBConnection conn = new DBConnection();
+            conn.Connect("Database/crabapple.db");
+
+            if (conn.RunSQL(sql) == false)
+            {
+                Debug.WriteLine("Could not modify user in ModifyUser");
+            }
+
+            conn.Disconnect();
+        }
+
         public void DeleteUser(string ID)
         {
             string sql = $"DELETE FROM Users WHERE id = '{ID}';";
@@ -124,6 +150,22 @@ namespace CrapApple
             conn.Disconnect();
         }
 
+        public void GetUsers()
+        {
+            string sql = $"SELECT * FROM Users;";
+
+            DBConnection conn = new DBConnection();
+            if (conn.RunSQL(sql) == false)
+            {
+                Debug.WriteLine("Could not get users in GetUsers");
+            }
+
+            // Generate a list from the result of RunSQL
+            List<User> users = new List<User>();
+            SQLiteDataReader? dataReader = conn.RunSQLQuery(sql);
+            
+        }
+
         public void AddChore(Chore chore)
         {
             string sql = $"INSERT INTO Chores(choreId,name,description,weight,assignedUser,dateOfCompletion,isCompleted,isLate) VALUES ('{chore.ID}', '{chore.Name}','{chore.Description}','{chore.Weight}','{chore.AssignedUser?.Id ?? ""}','{chore.DateOfCompletion}','{chore.IsCompleted}','{chore.IsLate}');";
@@ -139,6 +181,21 @@ namespace CrapApple
             }
 
             // Disconnect
+            conn.Disconnect();
+        }
+
+        public void ModifyChore(Chore chore)
+        {
+            string sql = $"UPDATE Chores SET name = '{chore.Name}', description = {chore.Description}, weight = {chore.Weight}, assignedUser = '{chore.AssignedUser?.Id ?? ""}', dateOfCompletion = '{chore.DateOfCompletion}', isCompleted = '{chore.IsCompleted}', isLate = '{chore.IsLate}' WHERE id = '{chore.ID}';";
+
+            DBConnection conn = new DBConnection();
+            conn.Connect("Database/crabapple.db");
+
+            if (conn.RunSQL(sql) == false)
+            {
+                Debug.WriteLine("Could not modify chore in ModifyChore");
+            }
+
             conn.Disconnect();
         }
 

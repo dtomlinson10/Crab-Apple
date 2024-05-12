@@ -2,12 +2,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Diagnostics;
-using System.Collections.ObjectModel;
 
 namespace CrapApple
 {
@@ -16,12 +15,14 @@ namespace CrapApple
         public String systemID;
         public List<Chore> choreList;
         public List<User> userList;
+        public DBConnection conn;
 
         public AssignmentSystem(String systemID, ObservableCollection<Chore> choreList, ObservableCollection<User> userList)
         {
             this.systemID = systemID;
             this.userList = new List<User>(userList);
             this.choreList = new List<Chore>(choreList);
+            this.conn = new DBConnection();
         }
 
         /// <summary>
@@ -80,6 +81,10 @@ namespace CrapApple
             MessageBox.Show(sb.ToString(), "Success!");
 
             // Commit changes to the database
+            foreach (var user in userList)
+            {
+                conn.ModifyUser(user);
+            }
         }
     }
 }

@@ -75,10 +75,9 @@ namespace CrapApple
             this.IsLate = isLate;
         }
 
-        public void addToDatabase(DbConnection connection)
+        public void addToDatabase(DbConnection conn)
         {
             // db connection needs to be implemented
-            throw new NotImplementedException();
         }
     }
 }
