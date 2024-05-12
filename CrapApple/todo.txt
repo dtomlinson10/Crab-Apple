@@ -1,0 +1,26 @@
+TODO LIST:
+
+Dan:
+- Add tutorial
+- Add headings to graphs
+- Make graphs work (lmao)
+- Collect points button & points display
+
+Harvey: 
+- Connect the chores with database
+- Fix manual assign user
+- Sequence Diagrams
+- Add labels to auto assign
+- Docstrings for classes
+
+Casey:
+ - Edit tables for database
+ - Test AddUser and AddChore
+ - Testing paperwork
+ - ERD Diagrams
+
+Matt
+- Implement regular user visibility
+- Connect chore management to database
+- different weekly grid per different user
+- Implement task 8 chore completion
