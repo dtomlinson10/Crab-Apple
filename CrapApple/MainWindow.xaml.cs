@@ -48,7 +48,7 @@ namespace CrapApple
             }
 
             //generates sample chores and populate the data grids
-            GenerateDataGrids();
+            GenerateDataGrids(conn);
         }
 
         private void SetInitialVisibility()
@@ -58,10 +58,10 @@ namespace CrapApple
             HideAdminFunctionality();
         }
 
-        private void GenerateDataGrids()
+        private void GenerateDataGrids(DBConnection db)
         {
             //set the data sources for various data grids and combo boxes
-            usersDataGrid.ItemsSource = _viewModel.PersonList;
+            usersDataGrid.ItemsSource = db.GetUsers();
             choresDataGrid.ItemsSource = _viewModel.ChoreList;
 
             selectUserCB.DisplayMemberPath = "FullName";

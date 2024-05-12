@@ -152,22 +152,32 @@ namespace CrapApple
 
         public List<User> GetUsers()
         {
+            List<User> users = new List<User>();
             string sql = $"SELECT * FROM Users;";
 
             DBConnection conn = new DBConnection();
             conn.Connect("Database/crabapple.db");
-            if (conn.RunSQL(sql) == false)
+            
+            SQLiteDataReader? result = conn.RunSQLQuery(sql);
+
+            if (result != null)
             {
-                Debug.WriteLine("Could not get users in GetUsers");
+                while (result.Read())
+                {
+                    if (result.GetString(7) == "admin")
+                    {
+                        users.Add(new Admin(result.GetValue(0).ToString(), result.GetString(1), result.GetString(2), result.GetString(3), result.GetString(8)));
+                    }
+                    else
+                    {
+                        users.Add(new RegularUser(result.GetValue(0).ToString(), result.GetString(1), result.GetString(2), result.GetString(3), result.GetString(8)));
+                    }
+                }
+            } else
+            {
+                Debug.WriteLine("Cannot get list of all students.");
             }
 
-            // Generate a list from the result of RunSQL
-            List<User> users = new List<User>();
-            SQLiteDataReader? dataReader = conn.RunSQLQuery(sql);
-            while(dataReader.Read())
-            {
-                Debug.WriteLine(dataReader.GetString(0));
-            }
             return users;
         }
 
