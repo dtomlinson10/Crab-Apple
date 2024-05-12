@@ -10,8 +10,8 @@ namespace CrapApple
         public string Surname { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public List<Chore> CompletedChores { get; set; }
-        public List<Chore> AssignedChores { get; set; }
+        public List<Chore>? CompletedChores { get; set; }
+        public List<Chore>? AssignedChores { get; set; }
         public int TotalChores { get; set; }
 
         public RegularUser(string id, string forename, string surname, string email, string password)

@@ -40,14 +40,13 @@ namespace CrapApple
             {
                 _viewModel.GenerateChores(5, conn);
             }
-            //clear the PersonList in the view model and add people
             _viewModel.PersonList.Clear();
-            _viewModel.PersonList = conn.GetUsers();
+            _viewModel.ChoreList.Clear();
 
+            _viewModel.PersonList = conn.GetUsers();
             _viewModel.ChoreList = conn.GetChores(_viewModel.PersonList);
 
-            //generates sample chores and populate the data grids
-            GenerateDataGrids(conn);
+            GenerateDataGrids();
         }
 
         private void SetInitialVisibility()
@@ -57,7 +56,7 @@ namespace CrapApple
             HideAdminFunctionality();
         }
 
-        private void GenerateDataGrids(DBConnection db)
+        private void GenerateDataGrids()
         {
             //set the data sources for various data grids and combo boxes
             usersDataGrid.ItemsSource = _viewModel.PersonList;

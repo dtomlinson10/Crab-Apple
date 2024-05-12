@@ -1,0 +1,15 @@
+﻿<Window x:Class="CrapApple.Statistics_tutorial"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CrapApple"
+        mc:Ignorable="d"
+        Title="Statistics_tutorial" Height="450" Width="800">
+    <Grid Background="Ivory">
+        <TextBlock x:Name="Heading" HorizontalAlignment="Center" Height="75" TextWrapping="Wrap" VerticalAlignment="Top" Width="780" Margin="0,10,0,0" TextAlignment="Center"><Run Language="en-gb" Text="Tutorial for Statistcs" Background="DarkSeaGreen" FontSize="50"/></TextBlock>
+        <TextBlock x:Name="Scatter_Graph_Tutorial_textbox" HorizontalAlignment="Left" Height="250" Margin="25,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" Background="DarkSeaGreen" FontSize="20"><Run Text="Scatter Graph"/><LineBreak/><Run/><LineBreak/><Run Language="en-gb" Text="The scatter represents "/><LineBreak/><Run/></TextBlock>
+        <TextBlock x:Name="Bar_chart_Tutorial_textbox" HorizontalAlignment="Left" Height="250" Margin="540,90,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="250" Background="DarkSeaGreen" FontSize="20"/>
+        <TextBlock x:Name="Pie_Chart_Tutorial_textbox" HorizontalAlignment="Left" Height="250" Margin="280,90,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="250" Background="DarkSeaGreen" FontSize="20"/>
+    </Grid>
+</Window>

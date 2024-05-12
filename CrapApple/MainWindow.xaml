@@ -100,6 +100,7 @@
                     <ScottPlot:WpfPlot x:Name="WpfPlot1" Width="250" Height="150" Margin="14,82,133,134" />
                     <ScottPlot:WpfPlot x:Name="WpfPlot2" Width="250" Height="150" Margin="272,82,272,134" Grid.ColumnSpan="2" />
                     <ScottPlot:WpfPlot x:Name="WpfPlot3" Width="250" Height="150" Margin="137,82,10,134" Grid.Column="1" />
+                    <Button Content="Button" HorizontalAlignment="Left" Height="58" Margin="73,264,0,0" VerticalAlignment="Top" Width="153"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="ChoreManagement" Header="Chore Management">

@@ -155,11 +155,11 @@ namespace CrapApple
         public ObservableCollection<User> GetUsers()
         {
             ObservableCollection<User> users = new ObservableCollection<User>();
-            string sql = $"SELECT * FROM Users;";
+            string sql = "SELECT * FROM Users;";
 
             DBConnection conn = new DBConnection();
             conn.Connect("Database/crabapple.db");
-            
+
             SQLiteDataReader? result = conn.RunSQLQuery(sql);
 
             if (result != null)
@@ -167,25 +167,71 @@ namespace CrapApple
                 while (result.Read())
                 {
                     if (result.GetString(7) == "admin")
-                    { // Update with new constructor
+                    {
+                        // Split assignedChores and completedChores into ids
+                        string[] assignedChoreIds = result.GetString(8).Split(',');
+                        string[] completedChoreIds = result.GetString(9).Split(',');
 
-                        // Split assignedChores and completedChores into ids 
-                        // Find ids in the chorelist 
-                        // Create new chores for every match found and add them to assignedChores or completedChores
-                        users.Add(new Admin(result.GetValue(0).ToString(), result.GetString(1), result.GetString(2), result.GetString(3), result.GetString(8)));
+                        List<Chore> assignedChores = new List<Chore>();
+                        List<Chore> completedChores = new List<Chore>();
+
+                        // Retrieve chores from database based on ids
+                        foreach (string choreId in assignedChoreIds)
+                        {
+                            // Fetch chore from database using choreId and add to assignedChores
+                            Chore chore = FetchChoreFromDatabase(choreId);
+                            if (chore != null)
+                                assignedChores.Add(chore);
+                        }
+
+                        foreach (string choreId in completedChoreIds)
+                        {
+                            // Fetch chore from database using choreId and add to completedChores
+                            Chore chore = FetchChoreFromDatabase(choreId);
+                            if (chore != null)
+                                completedChores.Add(chore);
+                        }
+
+                        // Create Admin object and add to users
+                        users.Add(new Admin(
+                            result.GetValue(0).ToString(),
+                            result.GetString(1),
+                            result.GetString(2),
+                            result.GetString(3),
+                            result.GetString(4),
+                            result.GetString(5),
+                            completedChores,
+                            assignedChores,
+                            result.GetValue(10)
+                        ));
                     }
                     else
                     {
-                        users.Add(new RegularUser(result.GetValue(0).ToString(), result.GetString(1), result.GetString(2), result.GetString(3), result.GetString(8)));
+                        // Create RegularUser object and add to users
+                        users.Add(new RegularUser(
+                            result.GetValue(0).ToString(),
+                            result.GetString(1),
+                            result.GetString(2),
+                            result.GetString(3),
+                            result.GetString(8)
+                        ));
                     }
                 }
-            } else
+            }
+            else
             {
                 Debug.WriteLine("Cannot get list of all students.");
             }
 
             return users;
         }
+
+        // Helper method to fetch chore from the database
+        private Chore FetchChoreFromDatabase(string choreId)
+        {
+            
+        }
+
 
         public void AddChore(Chore chore)
         {
