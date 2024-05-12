@@ -100,14 +100,15 @@ namespace CrapApple
 
 
 
-        public void GenerateChores(int choresToGenerate)
+        public void GenerateChores(int choresToGenerate, DBConnection conn)
         {
             for (int i = 0; i < choresToGenerate; i++)
             {
                 ChoreGenerationScript choreGenerationScript = new ChoreGenerationScript();
-                Chore chore = choreGenerationScript.GenerateChore();
+                Chore chore = choreGenerationScript.GenerateChore(i);
 
                 ChoreList.Add(chore);
+                conn.AddChore(chore);
             }
         }
 

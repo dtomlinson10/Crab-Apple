@@ -25,24 +25,29 @@ namespace CrapApple
             DataContext = _viewModel;
 
             DBConnection dBConnection = new();
+            // dBConnection.GetUsers();
 
-            InitializeData();
+            InitializeData(dBConnection);
             SetInitialVisibility();
             addRewardsDisplay();
             addGraph();
         }
 
-        private void InitializeData()
+        private void InitializeData(DBConnection conn)
         {
+            _viewModel.GenerateChores(5, conn);
             //clear the PersonList in the view model and add people
             _viewModel.PersonList.Clear();
             _viewModel.PersonList.Add(new RegularUser("001", "Daniel", "Tomlinson", "dtomlinson10@outlook.com", "password"));
-            _viewModel.PersonList.Add(new Admin("002", "Harvey", "Walker", "harveywalker500@gmail.com", "password2"));
-            _viewModel.PersonList.Add(new RegularUser("101", "John", "Smith", "harveywalker500@gmail.com", "password"));
-            _viewModel.PersonList.Add(new Admin("102", "Matt", "Taylor", "matt@gmail.com", "password"));
+            _viewModel.PersonList.Add(new RegularUser("002", "Harvey", "Walker", "harveywalker500@gmail.com", "password2"));
+            _viewModel.PersonList.Add(new RegularUser("003", "John", "Smith", "john.smith1@gmail.com", "password"));
+            _viewModel.PersonList.Add(new Admin("101", "Matt", "Taylor", "matt@gmail.com", "password"));
+            foreach (User user in _viewModel.PersonList)
+            {
+                conn.AddUser(user);
+            }
 
             //generates sample chores and populate the data grids
-            _viewModel.GenerateChores(5);
             GenerateDataGrids();
         }
 

@@ -90,7 +90,7 @@ namespace CrapApple
         {
             if (user is RegularUser regularUser)
             {
-                string sql = $"INSERT INTO Users(userId,forename,surname,email,assignedChores,completedChores,totalChores,role,password) VALUES ('{regularUser.Id}', '{regularUser.Forename}','{regularUser.Surname}','{regularUser.Email}','{regularUser.AssignedChores.Count}','{regularUser.CompletedChores.Count}','{regularUser.TotalChores}','{"regularUser"}','{regularUser.Password}');";
+                string sql = $"INSERT INTO Users(forename,surname,email,assignedChores,completedChores,totalChores,role,password) VALUES ('{regularUser.Forename}','{regularUser.Surname}','{regularUser.Email}','{regularUser.AssignedChores.Count}','{regularUser.CompletedChores.Count}','{regularUser.TotalChores}','{"regularUser"}','{regularUser.Password}');";
 
                 // Connect to the database
                 DBConnection conn = new DBConnection();
@@ -150,11 +150,12 @@ namespace CrapApple
             conn.Disconnect();
         }
 
-        public void GetUsers()
+        public List<User> GetUsers()
         {
             string sql = $"SELECT * FROM Users;";
 
             DBConnection conn = new DBConnection();
+            conn.Connect("Database/crabapple.db");
             if (conn.RunSQL(sql) == false)
             {
                 Debug.WriteLine("Could not get users in GetUsers");
@@ -163,12 +164,16 @@ namespace CrapApple
             // Generate a list from the result of RunSQL
             List<User> users = new List<User>();
             SQLiteDataReader? dataReader = conn.RunSQLQuery(sql);
-            
+            while(dataReader.Read())
+            {
+                Debug.WriteLine(dataReader.GetString(0));
+            }
+            return users;
         }
 
         public void AddChore(Chore chore)
         {
-            string sql = $"INSERT INTO Chores(choreId,name,description,weight,assignedUser,dateOfCompletion,isCompleted,isLate) VALUES ('{chore.ID}', '{chore.Name}','{chore.Description}','{chore.Weight}','{chore.AssignedUser?.Id ?? ""}','{chore.DateOfCompletion}','{chore.IsCompleted}','{chore.IsLate}');";
+            string sql = $"INSERT INTO Chores(name,description,weight,assignedUser,dateOfCompletion,isCompleted,isLate) VALUES ('{chore.Name}','{chore.Description}','{chore.Weight}','{chore.AssignedUser?.Id ?? ""}','{chore.DateOfCompletion}','{chore.IsCompleted}','{chore.IsLate}');";
 
             // Connect to the database
             DBConnection conn = new DBConnection();

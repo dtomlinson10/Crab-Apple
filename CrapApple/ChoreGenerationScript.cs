@@ -13,7 +13,7 @@ namespace CrapApple
         private List<String> verbList = new List<String> { "Wash", "Sweep", "Mop", "Dust", "Vacuum", "Scrub", "Clean", "Wipe", "Polish", "Organize", "Sort", "Fold", "Iron", "Rinse", "Disinfect", "Scrub", "Sanitize", "Tidy", "Empty", "Dispose" };
         private List<String> nounList = new List<String> { "Lawn", "Shelves", "Garden", "Windows", "Floor", "Carpet", "Trash", "Laundry", "Clothes", "Plants", "Dishes" };
 
-        public Chore GenerateChore()
+        public Chore GenerateChore(int idIterator)
         {
             //generate random name
             Random rnd = new Random();
@@ -22,9 +22,10 @@ namespace CrapApple
             String verb = verbList[verbIndex];
             String noun = nounList[nounIndex];
             String choreName = verb + " the " + noun;
+            string id = idIterator.ToString();
 
             //create new chore
-            return new Chore("001", choreName, "A chore to " + verb + " the " + noun, 1, null, DateOnly.FromDateTime(DateTime.Now), false, false);
+            return new Chore(id, choreName, "A chore to " + verb + " the " + noun, 1, null, DateOnly.FromDateTime(DateTime.Now), false, false);
         }
     }
 }
