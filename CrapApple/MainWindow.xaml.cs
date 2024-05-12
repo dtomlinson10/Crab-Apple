@@ -44,7 +44,7 @@ namespace CrapApple
             _viewModel.PersonList.Clear();
             _viewModel.PersonList = conn.GetUsers();
 
-            _viewModel.ChoreList = conn.GetChores();
+            _viewModel.ChoreList = conn.GetChores(_viewModel.PersonList);
 
             //generates sample chores and populate the data grids
             GenerateDataGrids(conn);
@@ -257,46 +257,59 @@ namespace CrapApple
         // Statistics Tab 
         private void addGraph(DBConnection conn)
         {
-            // addSampleData();
-            // TODO: Generate from database
-            // 
-
-            // double[] dataxScatter = ;
-            //   double[] datayScatter = ;
-            //   this.WpfPlot1.Plot.Add.Scatter(dataxScatter, datayScatter);
-
-            string[] labels = { };
-            double[] completedChoresGraph = new double[0];
-            double[] positions = new double[0];
-            foreach( User user in _viewModel.PersonList)
+            //addSampleData();
+            //scatter graph
+            this.WpfPlot1.Plot.XLabel("Chores");
+            this.WpfPlot1.Plot.YLabel("Chore weight");
+            this.WpfPlot1.Plot.Title("Chore Weight of Each Chore");
+            double[] dataxScatter = { };
+            double[] datayScatter = { };
+            for (int i = 0; i < _viewModel.ChoreList.Count; i++)
             {
-                Array.Resize(ref labels, labels.Length + 1);
-                labels[labels.Length - 1] = user.Forename;
-
-                Array.Resize(ref completedChoresGraph, completedChoresGraph.Length + 1);
-                completedChoresGraph[completedChoresGraph.Length - 1] = user.CompletedChores.Count;
-
-                Array.Resize(ref positions, positions.Length + 1);
-                positions[positions.Length - 1]++;
-
+                Array.Resize(ref dataxScatter, dataxScatter.Length + 1);
+                Array.Resize(ref datayScatter, datayScatter.Length + 1);
+                double id = Convert.ToDouble(_viewModel.ChoreList[i].ID);
+                dataxScatter[i] = id;
+                datayScatter[i] = _viewModel.ChoreList[i].Weight;
             }
-           
+            this.WpfPlot1.Plot.Add.Scatter(dataxScatter, datayScatter);
 
+            //bar chart
+            double[] values = { };
+            List<String> names = new List<String>();
+            for (int i = 0; i < _viewModel.PersonList.Count; i++)
+            {
+                Array.Resize(ref values, values.Length + 1);
+                User user = _viewModel.PersonList[i];
+                values[i] = i + 1; // user.CompletedChores.Count;
+                names.Add(user.Forename);
+            }
+            var barPlot = WpfPlot2.Plot.Add.Bars(values);
 
+            int barIndex = 0;
+            foreach (var bar in barPlot.Bars)
+            {
+                bar.Label = names[barIndex];
+                barIndex++;
+            }
+            this.WpfPlot2.Plot.XLabel("Users"); 
+            this.WpfPlot2.Plot.YLabel("Chores Completed");
+            this.WpfPlot1.Plot.Title("Chores Completed per Person");
+
+            //pie chart
             double[] dataxPie = new double[0];
             foreach (User user in _viewModel.PersonList)
             {
                 Array.Resize(ref dataxPie, dataxPie.Length + 1);
                 dataxPie[dataxPie.Length - 1] = user.TotalChores - user.AssignedChores.Count;
             }
-
-            this.WpfPlot2.Plot.Add.Bars(completedChoresGraph, positions);
-            //this.WpfPlot2.Plot(positions, labels);
-            //this.WpfPlot2.Plot.Axes.Add
             this.WpfPlot3.Plot.Add.Pie(dataxPie);
+            this.WpfPlot3.Plot.Title("Percentage of chores completed");
+
             this.WpfPlot1.Refresh();
             this.WpfPlot2.Refresh();
             this.WpfPlot3.Refresh();
+
         }
 
         private void addSampleData()
@@ -316,7 +329,6 @@ namespace CrapApple
             _viewModel.ChoreList.Add(new Chore("7", "Mow the lawn", "Mow the grass in the front and back yards.", 0, null, new DateOnly(2024, 5, 12), true, false));
             _viewModel.ChoreList.Add(new Chore("8", "Weed the garden", "Pull out all weeds from the garden beds.", 0, null, new DateOnly(2024, 5, 12), true, false));
             _viewModel.ChoreList.Add(new Chore("9", "Dust furniture", "Dust all furniture surfaces in the living room and bedrooms.", 0, null, new DateOnly(2024, 5, 12), true, false));
-
         }
 
         // Chore management Tab

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using System.Diagnostics;
+using System.Linq;
 
 namespace CrapApple
 {
@@ -166,7 +167,11 @@ namespace CrapApple
                 while (result.Read())
                 {
                     if (result.GetString(7) == "admin")
-                    {
+                    { // Update with new constructor
+
+                        // Split assignedChores and completedChores into ids 
+                        // Find ids in the chorelist 
+                        // Create new chores for every match found and add them to assignedChores or completedChores
                         users.Add(new Admin(result.GetValue(0).ToString(), result.GetString(1), result.GetString(2), result.GetString(3), result.GetString(8)));
                     }
                     else
@@ -233,7 +238,7 @@ namespace CrapApple
             conn.Disconnect();
         }
 
-        public ObservableCollection<Chore> GetChores()
+        public ObservableCollection<Chore> GetChores(ObservableCollection<User> userList)
         {
             ObservableCollection<Chore> chores = new ObservableCollection<Chore>();
             string sql = $"SELECT * FROM Chores;";
@@ -247,15 +252,12 @@ namespace CrapApple
             {
                 while (result.Read())
                 {
-                    DateOnly dateOnlyResult = result.GetDateTime(5).
-                    chores.Add(new Chore(result.GetValue(0).ToString(), 
-                        result.GetString(1), 
-                        result.GetString(2), 
-                        result.GetValue(3), 
-                        result.GetString(4), 
-                        DateOnlyResult, 
-                        result.GetBoolean(6), 
-                        result.GetBoolean(7)));
+                    // Do the same in reverse for getUsers
+                    // Fix the issue with DateTime -> DateOnly
+                    String userID = result.GetString(4);
+                    User user = userList.FirstOrDefault(u => u.Id == userID);
+                    DateOnly dateOnly = DateOnly.FromDateTime(result.GetDateTime(5));
+                    chores.Add(new Chore(result.GetValue(0).ToString(), result.GetString(1), result.GetString(2), (int)result.GetDouble(3), user, dateOnly, result.GetBoolean(6), result.GetBoolean(7)));
                 }
             }
             else
