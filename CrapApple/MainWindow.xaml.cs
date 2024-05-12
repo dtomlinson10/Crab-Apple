@@ -27,23 +27,24 @@ namespace CrapApple
             DBConnection dBConnection = new();
             // dBConnection.GetUsers();
 
-            InitializeData(dBConnection);
+            InitializeData(dBConnection, false);
             SetInitialVisibility();
             addRewardsDisplay();
-            addGraph();
+            addGraph(dBConnection);
             ShowAdminFunctionality();
         }
 
-        private void InitializeData(DBConnection conn)
+        private void InitializeData(DBConnection conn, bool choresNeeded)
         {
-            _viewModel.GenerateChores(5, conn);
+            if (choresNeeded)
+            {
+                _viewModel.GenerateChores(5, conn);
+            }
             //clear the PersonList in the view model and add people
             _viewModel.PersonList.Clear();
             _viewModel.PersonList = conn.GetUsers();
-            foreach (User user in _viewModel.PersonList)
-            {
-                conn.AddUser(user);
-            }
+
+            _viewModel.ChoreList = conn.GetChores();
 
             //generates sample chores and populate the data grids
             GenerateDataGrids(conn);
@@ -59,7 +60,7 @@ namespace CrapApple
         private void GenerateDataGrids(DBConnection db)
         {
             //set the data sources for various data grids and combo boxes
-            usersDataGrid.ItemsSource = db.GetUsers();
+            usersDataGrid.ItemsSource = _viewModel.PersonList;
             choresDataGrid.ItemsSource = _viewModel.ChoreList;
 
             selectUserCB.DisplayMemberPath = "FullName";
@@ -208,8 +209,6 @@ namespace CrapApple
                     RegularUser selectedUser = (RegularUser)names_display.SelectedItem;
                     UpdateUserInfo(selectedUser);
                 }
-                //update the user information displays
-
             }
         }
 
@@ -256,15 +255,68 @@ namespace CrapApple
         }
 
         // Statistics Tab 
-        private void addGraph()
+        private void addGraph(DBConnection conn)
         {
-            // TODO: Generate from database 
-            double[] datax = { 1, 2, 3, 4, 5 };
-            double[] datay = { 5, 20, 15, 20, 25 };
-            this.WpfPlot1.Plot.Add.Scatter(datax, datay);
-            this.WpfPlot2.Plot.Add.Bars(datax);
-            this.WpfPlot3.Plot.Add.Pie(datay);
+            // addSampleData();
+            // TODO: Generate from database
+            // 
+
+            // double[] dataxScatter = ;
+            //   double[] datayScatter = ;
+            //   this.WpfPlot1.Plot.Add.Scatter(dataxScatter, datayScatter);
+
+            string[] labels = { };
+            double[] completedChoresGraph = new double[0];
+            double[] positions = new double[0];
+            foreach( User user in _viewModel.PersonList)
+            {
+                Array.Resize(ref labels, labels.Length + 1);
+                labels[labels.Length - 1] = user.Forename;
+
+                Array.Resize(ref completedChoresGraph, completedChoresGraph.Length + 1);
+                completedChoresGraph[completedChoresGraph.Length - 1] = user.CompletedChores.Count;
+
+                Array.Resize(ref positions, positions.Length + 1);
+                positions[positions.Length - 1]++;
+
+            }
+           
+
+
+            double[] dataxPie = new double[0];
+            foreach (User user in _viewModel.PersonList)
+            {
+                Array.Resize(ref dataxPie, dataxPie.Length + 1);
+                dataxPie[dataxPie.Length - 1] = user.TotalChores - user.AssignedChores.Count;
+            }
+
+            this.WpfPlot2.Plot.Add.Bars(completedChoresGraph, positions);
+            //this.WpfPlot2.Plot(positions, labels);
+            //this.WpfPlot2.Plot.Axes.Add
+            this.WpfPlot3.Plot.Add.Pie(dataxPie);
             this.WpfPlot1.Refresh();
+            this.WpfPlot2.Refresh();
+            this.WpfPlot3.Refresh();
+        }
+
+        private void addSampleData()
+        {
+            _viewModel.PersonList.Clear();
+            _viewModel.ChoreList.Clear();
+
+            _viewModel.PersonList.Add(new Admin("1", "Alice", "Smith", "alice.smith@example.com", "password123", new List<Chore>(), new List<Chore>(), 3));
+            _viewModel.PersonList.Add(new RegularUser("2", "Bob", "Johnson", "bob.johnson@example.com", "password456", new List<Chore>(), new List<Chore>(), 3));
+            _viewModel.PersonList.Add(new RegularUser("3", "Eve", "Brown", "eve.brown@example.com", "password789", new List<Chore>(), new List<Chore>(), 3));
+            _viewModel.ChoreList.Add(new Chore("1", "Wash Dishes", "Wash all the dishes in the sink.", 0, null, new DateOnly(2024, 5, 12), true, false));
+            _viewModel.ChoreList.Add(new Chore("2", "Take out the trash", "Take the trash out to the curb for collection.", 0, null, new DateOnly(2024, 5, 12), true, false));
+            _viewModel.ChoreList.Add(new Chore("3", "Vacuum the floor", "Vacuum all carpeted areas in the house.", 0, null, new DateOnly(2024, 5, 12), true, false));
+            _viewModel.ChoreList.Add(new Chore("4", "Do the laundry", "Wash, dry, fold, and put away all the laundry.", 0, null, new DateOnly(2024, 5, 12), true, false));
+            _viewModel.ChoreList.Add(new Chore("5", "Clean the bathroom", "Scrub the toilet, sink, shower, and mop the floor in the bathroom.", 0, null, new DateOnly(2024, 5, 12), true, false));
+            _viewModel.ChoreList.Add(new Chore("6", "Water the plants", "Give water to all indoor and outdoor plants.", 0, null, new DateOnly(2024, 5, 12), true, false));
+            _viewModel.ChoreList.Add(new Chore("7", "Mow the lawn", "Mow the grass in the front and back yards.", 0, null, new DateOnly(2024, 5, 12), true, false));
+            _viewModel.ChoreList.Add(new Chore("8", "Weed the garden", "Pull out all weeds from the garden beds.", 0, null, new DateOnly(2024, 5, 12), true, false));
+            _viewModel.ChoreList.Add(new Chore("9", "Dust furniture", "Dust all furniture surfaces in the living room and bedrooms.", 0, null, new DateOnly(2024, 5, 12), true, false));
+
         }
 
         // Chore management Tab

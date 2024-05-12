@@ -232,5 +232,38 @@ namespace CrapApple
             // Disconnect
             conn.Disconnect();
         }
+
+        public ObservableCollection<Chore> GetChores()
+        {
+            ObservableCollection<Chore> chores = new ObservableCollection<Chore>();
+            string sql = $"SELECT * FROM Chores;";
+
+            DBConnection conn = new DBConnection();
+            conn.Connect("Database/crabapple.db");
+
+            SQLiteDataReader? result = conn.RunSQLQuery(sql);
+
+            if (result != null)
+            {
+                while (result.Read())
+                {
+                    DateOnly dateOnlyResult = result.GetDateTime(5).
+                    chores.Add(new Chore(result.GetValue(0).ToString(), 
+                        result.GetString(1), 
+                        result.GetString(2), 
+                        result.GetValue(3), 
+                        result.GetString(4), 
+                        DateOnlyResult, 
+                        result.GetBoolean(6), 
+                        result.GetBoolean(7)));
+                }
+            }
+            else
+            {
+                Debug.WriteLine("Cannot get list of all chores.");
+            }
+
+            return chores;
+        }
     }
 }
