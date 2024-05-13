@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace CrapApple
 {
+    //
     public class Chore : INotifyPropertyChanged
     {
         public String ID;

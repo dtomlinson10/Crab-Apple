@@ -24,5 +24,12 @@ namespace CrapApple
             InitializeComponent();
 
         }
+
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow window = new MainWindow();
+            window.Show();
+            this.Hide();
+        }
     }
 }

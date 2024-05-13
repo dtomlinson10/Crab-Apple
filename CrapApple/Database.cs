@@ -179,30 +179,29 @@ namespace CrapApple
                         foreach (string choreId in assignedChoreIds)
                         {
                             // Fetch chore from database using choreId and add to assignedChores
-                            Chore chore = FetchChoreFromDatabase(choreId);
-                            if (chore != null)
-                                assignedChores.Add(chore);
+                           // Chore chore = FetchChoreFromDatabase(choreId);
+                            //if (chore != null)
+                               // assignedChores.Add(chore);
                         }
 
                         foreach (string choreId in completedChoreIds)
                         {
                             // Fetch chore from database using choreId and add to completedChores
-                            Chore chore = FetchChoreFromDatabase(choreId);
-                            if (chore != null)
-                                completedChores.Add(chore);
+                           // Chore chore = FetchChoreFromDatabase(choreId);
+                           // if (chore != null)
+                               // completedChores.Add(chore);
                         }
 
-                        // Create Admin object and add to users
+                       // Create Admin object and add to users
                         users.Add(new Admin(
                             result.GetValue(0).ToString(),
                             result.GetString(1),
                             result.GetString(2),
                             result.GetString(3),
                             result.GetString(4),
-                            result.GetString(5),
                             completedChores,
                             assignedChores,
-                            result.GetValue(10)
+                            (int)result.GetValue(7)
                         ));
                     }
                     else
@@ -227,9 +226,9 @@ namespace CrapApple
         }
 
         // Helper method to fetch chore from the database
-        private Chore FetchChoreFromDatabase(string choreId)
+        private void FetchChoreFromDatabase(string choreId)
         {
-            
+           
         }
 
 

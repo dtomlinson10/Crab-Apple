@@ -61,8 +61,8 @@ namespace CrapApple
             //set the data sources for various data grids and combo boxes
             usersDataGrid.ItemsSource = _viewModel.PersonList;
             choresDataGrid.ItemsSource = _viewModel.ChoreList;
-
-            selectUserCB.DisplayMemberPath = "FullName";
+            
+            selectUserCB.DisplayMemberPath = "Forename";
             selectUserCB.ItemsSource = _viewModel.PersonList;
             selectChoreCB.DisplayMemberPath = "Name";
             selectChoreCB.ItemsSource = _viewModel.ChoreList;
@@ -251,6 +251,8 @@ namespace CrapApple
         private void Collect_Rewards_Button_Click(object sender, RoutedEventArgs e)
         {
             //add logic
+            int numberOfPeople = _viewModel.ChoreList.Count;
+
         }
 
         // Statistics Tab 
@@ -258,9 +260,9 @@ namespace CrapApple
         {
             //addSampleData();
             //scatter graph
-            this.WpfPlot1.Plot.XLabel("Chores");
-            this.WpfPlot1.Plot.YLabel("Chore weight");
-            this.WpfPlot1.Plot.Title("Chore Weight of Each Chore");
+            this.Scatter_Graph.Plot.XLabel("Chores");
+            this.Scatter_Graph.Plot.YLabel("Chore weight");
+            this.Scatter_Graph.Plot.Title("Chore Weight of Each Chore");
             double[] dataxScatter = { };
             double[] datayScatter = { };
             for (int i = 0; i < _viewModel.ChoreList.Count; i++)
@@ -271,7 +273,7 @@ namespace CrapApple
                 dataxScatter[i] = id;
                 datayScatter[i] = _viewModel.ChoreList[i].Weight;
             }
-            this.WpfPlot1.Plot.Add.Scatter(dataxScatter, datayScatter);
+            this.Scatter_Graph.Plot.Add.Scatter(dataxScatter, datayScatter);
 
             //bar chart
             double[] values = { };
@@ -283,7 +285,7 @@ namespace CrapApple
                 values[i] = i + 1; // user.CompletedChores.Count;
                 names.Add(user.Forename);
             }
-            var barPlot = WpfPlot2.Plot.Add.Bars(values);
+            var barPlot = Bar_Chart.Plot.Add.Bars(values);
 
             int barIndex = 0;
             foreach (var bar in barPlot.Bars)
@@ -291,9 +293,9 @@ namespace CrapApple
                 bar.Label = names[barIndex];
                 barIndex++;
             }
-            this.WpfPlot2.Plot.XLabel("Users"); 
-            this.WpfPlot2.Plot.YLabel("Chores Completed");
-            this.WpfPlot1.Plot.Title("Chores Completed per Person");
+            this.Bar_Chart.Plot.XLabel("Users");
+            this.Bar_Chart.Plot.YLabel("Chores Completed");
+            this.Bar_Chart.Plot.Title("Chores Completed per Person");
 
             //pie chart
             double[] dataxPie = new double[0];
@@ -302,15 +304,24 @@ namespace CrapApple
                 Array.Resize(ref dataxPie, dataxPie.Length + 1);
                 dataxPie[dataxPie.Length - 1] = user.TotalChores - user.AssignedChores.Count;
             }
-            this.WpfPlot3.Plot.Add.Pie(dataxPie);
-            this.WpfPlot3.Plot.Title("Percentage of chores completed");
+            this.Pie_Chart.Plot.Add.Pie(dataxPie);
+            this.Pie_Chart.Plot.Title("Percentage of chores completed");
 
-            this.WpfPlot1.Refresh();
-            this.WpfPlot2.Refresh();
-            this.WpfPlot3.Refresh();
+
+            this.Scatter_Graph.Refresh();
+            this.Bar_Chart.Refresh();
+            this.Pie_Chart.Refresh();
 
         }
 
+        private void Tutorial_click(object sender, RoutedEventArgs e)
+        {
+            Statistics_tutorial tutorial = new Statistics_tutorial();
+            tutorial.Show();
+            this.Hide();
+        }
+
+        // adding sample data
         private void addSampleData()
         {
             _viewModel.PersonList.Clear();
@@ -347,5 +358,6 @@ namespace CrapApple
             _viewModel.ClearWeeklyChores();
         }
 
+        
     }
 }
