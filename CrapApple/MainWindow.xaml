@@ -7,7 +7,7 @@
         xmlns:ScottPlot="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        Title="Crab Apple" Height="450" Width="800">
+        Title="Crab Apple" Height="700" Width="1500">
     <Grid>
         <TabControl Margin="0,40,0,0">
             <TabItem x:Name="AssignChores" Header="Assign Chores">
@@ -97,11 +97,29 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Label x:Name="statLogInError" Content="Please log in as an Administrator to access this feature!" HorizontalAlignment="Left" Margin="247,134,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-                    <ScottPlot:WpfPlot x:Name="Scatter_Graph" Margin="5,5,119,116" Background="DarkSeaGreen"/>
-                    <ScottPlot:WpfPlot x:Name="Bar_Chart" Margin="256,112,256,-2" Grid.ColumnSpan="2" Background="DarkSeaGreen"/>
-                    <ScottPlot:WpfPlot x:Name="Pie_Chart" Margin="106,7,10,104" Grid.Column="1" Background="DarkSeaGreen"/>
-                    <Button Content="Tutorial" HorizontalAlignment="Left" Height="58" Margin="73,264,0,0" VerticalAlignment="Top" Width="153" Click="Tutorial_click" Background="DarkSeaGreen"/>
-                    <Label Grid.Column="1" Content="" HorizontalAlignment="Left" Height="95" Margin="193,263,0,0" VerticalAlignment="Top" Width="197" Background="DarkSeaGreen"/>
+                    <Button Content="Tutorial" HorizontalAlignment="Left" Height="58" Margin="34,528,0,0" VerticalAlignment="Top" Width="153" Click="Tutorial_click" Background="DarkSeaGreen"/>
+                    <Label Grid.Column="1" Content="" HorizontalAlignment="Left" Height="95" Margin="454,512,0,0" VerticalAlignment="Top" Width="197" Background="DarkSeaGreen"/>
+                    <ScottPlot:WpfPlot x:Name="Bar_choreWeight_Graph" Background="DarkSeaGreen" Margin="374,22,19,121" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
+                        <ScottPlot:WpfPlot.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleY="1" ScaleX="1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </ScottPlot:WpfPlot.RenderTransform>
+                    </ScottPlot:WpfPlot>
+                    <ScottPlot:WpfPlot x:Name="Bar_Chart" Background="DarkSeaGreen" Margin="26,20,395,363" RenderTransformOrigin="0.5,0.5">
+                        <ScottPlot:WpfPlot.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </ScottPlot:WpfPlot.RenderTransform>
+                    </ScottPlot:WpfPlot>
+                    <ScottPlot:WpfPlot x:Name="Pie_Chart" Background="DarkSeaGreen" Margin="29,263,398,98" RenderTransformOrigin="0.527,-0.098"/>
                 </Grid>
             </TabItem>
             <!--choreManagment nested tabs-->

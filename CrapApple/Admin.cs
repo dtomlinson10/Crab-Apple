@@ -5,6 +5,10 @@ using System.Collections.Generic;
 
 namespace CrapApple
 {
+    /// <summary>
+    /// admin class to create and save new admins
+    /// and get data for admins for data representation
+    /// </summary>
     public class Admin : User
     {
         public string Id { get; set; }

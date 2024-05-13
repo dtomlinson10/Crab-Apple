@@ -180,17 +180,17 @@ namespace CrapApple
                         foreach (string choreId in assignedChoreIds)
                         {
                             // Fetch chore from database using choreId and add to assignedChores
-                            // Chore chore = FetchChoreFromDatabase(choreId);
-                            //if (chore != null)
-                            // assignedChores.Add(chore);
+                            Chore chore = GetChore(choreId);
+                            if (chore != null)
+                                assignedChores.Add(chore);
                         }
 
                         foreach (string choreId in completedChoreIds)
                         {
                             // Fetch chore from database using choreId and add to completedChores
-                            // Chore chore = FetchChoreFromDatabase(choreId);
-                            // if (chore != null)
-                            // completedChores.Add(chore);
+                            Chore chore = GetChore(choreId);
+                            if (chore != null)
+                                completedChores.Add(chore);
                         }
 
                         // Create Admin object and add to users
@@ -227,9 +227,29 @@ namespace CrapApple
         }
 
         // Helper method to fetch chore from the database
-        private void FetchChoreFromDatabase(string choreId)
+        private Chore GetChore(string choreId)
         {
+            string sql = $"SELECT * FROM Chores WHERE ChoreID={choreId}";
 
+            // Connect to the database
+            DBConnection conn = new DBConnection();
+            conn.Connect("Database/crabapple.db");
+
+            SQLiteDataReader? result = conn.RunSQLQuery(sql);
+            DateOnly dateOnly = DateOnly.Parse(result.GetString(5));
+            if (result != null)
+            {
+                while (result.Read())
+                {
+                     Chore chore = new Chore(result.GetValue(0).ToString(), result.GetString(1), result.GetString(2), (int)result.GetValue(3), null, dateOnly, Convert.ToBoolean(result.GetValue(6)), Convert.ToBoolean(result.GetValue(7)));
+                    return chore;
+                }
+            } else
+            {
+                Debug.WriteLine("Cannot get chore.");
+            }
+            return null;
+            
         }
 
 

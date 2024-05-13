@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CrapApple
 {
-    internal class ChoreGenerationScript
+    public class ChoreGenerationScript
     {
         private List<String> verbList = new List<String> { "Wash", "Sweep", "Mop", "Dust", "Vacuum", "Scrub", "Clean", "Wipe", "Polish", "Organize", "Sort", "Fold", "Iron", "Rinse", "Disinfect", "Scrub", "Sanitize", "Tidy", "Empty", "Dispose" };
         private List<String> nounList = new List<String> { "Lawn", "Shelves", "Garden", "Windows", "Floor", "Carpet", "Trash", "Laundry", "Clothes", "Plants", "Dishes" };

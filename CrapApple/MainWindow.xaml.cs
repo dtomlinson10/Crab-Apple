@@ -27,9 +27,10 @@ namespace CrapApple
             _viewModel = new MainWindowViewModel();
             DataContext = _viewModel;
 
+            // get database connection
             DBConnection dBConnection = new();
-            // dBConnection.GetUsers();
 
+            // set up intial layout for each tab
             InitializeData(dBConnection, true);
             SetInitialVisibility();
             addRewardsDisplay();
@@ -42,8 +43,10 @@ namespace CrapApple
             InitializeChoreCompletionView();
         }
 
+        // get data from database and populate data grids
         private void InitializeData(DBConnection conn, bool choresNeeded)
         {
+            // generate chores in database if there isnt any
             if (choresNeeded)
             {
                 _viewModel.GenerateChores(5, conn);
@@ -122,6 +125,7 @@ namespace CrapApple
             UserInfoGrid.Visibility = Visibility.Visible;
             LogInError.Visibility = Visibility.Collapsed;
             rewards_display_grid.Visibility = Visibility.Visible;
+      
 
             statLogInError.Visibility = Visibility.Collapsed;
 
@@ -146,6 +150,8 @@ namespace CrapApple
             string email = loginEmail.Text;
             string password = loginPassword.Password;
 
+            // check if details match user/admin in database 
+            // and show functionality accordingly
             User user = _viewModel.PersonList.FirstOrDefault(u => u.Email == email);
             if (user != null)
             {
@@ -167,37 +173,53 @@ namespace CrapApple
             }
         }
 
-        // Assign Chores Tab
+        /// <summary>
+        /// add selected chore(s) to the selected user automatically
+        /// </summary>
+        
         private void AutoAssignChores_Click(object sender, RoutedEventArgs e)
         {
+            // add selected chores to a list
             List<Chore> selectedChores = new List<Chore>();
             foreach (var item in choresDataGrid.SelectedItems)
             {
                 selectedChores.Add((Chore)item);
             }
 
+            // add selected user to a list
             List<User> selectedUsers = new List<User>();
             foreach (var item in usersDataGrid.SelectedItems)
             {
                 selectedUsers.Add((User)item);
             }
 
+            // assign chore(s) to selected user
             _viewModel.AssignmentSystem.autoAssignChores(selectedChores, selectedUsers);
         }
 
+        /// <summary>
+        /// Manually assign selected chores to the selected user 
+        /// </summary>
+ 
         private void assignButton_Click(object sender, RoutedEventArgs e)
         {
+            // get selected user and chore(s)
             User selectedUser = (User)selectUserCB.SelectedItem;
             Chore selectedChore = (Chore)selectChoreCB.SelectedItem;
 
             selectedUser.AssignedChores.Add(selectedChore);
             Debug.WriteLine("Assigned " + selectUserCB.Text + " Chore: " + selectChoreCB.Text);
 
+            // query database to add selected chore to user
             DBConnection connection = new DBConnection();
             connection.RunSQL("UPDATE Users SET AssignedChores = " + selectedChore.ID + " WHERE ID = " + selectedUser.Id);
         }
 
         // Motivation Tab 
+
+        /// <summary>
+        /// call function to display the selected user info
+        /// </summary>
         private void names_display_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
@@ -219,11 +241,15 @@ namespace CrapApple
             }
         }
 
+        /// <summary>
+        /// update user info boxes when a user is selected 
+        /// </summary>
         private void UpdateUserInfo(User user)
         {
             //update the user info displays based on user selected
             if (user != null)
             {
+                // display info if there is a user selected
                 firstname_display.Text = user.Forename;
                 lastname_display.Text = user.Surname;
                 idDisplay.Text = user.Id;
@@ -245,6 +271,9 @@ namespace CrapApple
             }
         }
 
+        /// <summary>
+        /// create a list of rewards for display in motivation tab
+        /// </summary>
         private void addRewardsDisplay()
         {
             rewardsList = new List<String>();
@@ -253,12 +282,18 @@ namespace CrapApple
             rewardsList.Add("free pizza!");
             rewardsList.Add("30 points off voucher!");
             rewardsList.Add("2 small chores off!");
+
+            // display the rewards in the rewards box
             Rewards_display.ItemsSource = rewardsList;
         }
 
+        /// <summary>
+        /// collect rewards button functionality to collect available points if the user has completed some chores
+        /// </summary>
         private void Collect_Rewards_Button_Click(object sender, RoutedEventArgs e)
         {
-
+            // get selected user and check if they have completed the chore 
+            // if so add points to the counter and display in the textbox
             double points = 0;
             User selectedUser = _viewModel.SelectedUser;
             foreach (var i in _viewModel.ChoreList)
@@ -275,32 +310,49 @@ namespace CrapApple
         }
 
         // Statistics Tab 
+
+        /// <summary>
+        /// adding graphs to statistics tab
+        /// query database for data representation
+        /// style graphs
+        /// </summary>
         private void addGraph(DBConnection conn)
         {
-            //addSampleData();
-            //scatter graph
-            this.Scatter_Graph.Plot.XLabel("Chores");
-            this.Scatter_Graph.Plot.YLabel("Chore weight");
-            this.Scatter_Graph.Plot.Title("Chore Weight of Each Chore");
-            double[] dataxScatter = { };
-            double[] datayScatter = { };
+            //addSampleData(); used for when testing graph display
+            //bar chart for chore weight
+            double[] values_choreWeight = { };
+            List<String> names_ChoreWeight = new List<String>();
+            Tick[] ticks1 = new Tick[_viewModel.ChoreList.Count()];
+
             for (int i = 0; i < _viewModel.ChoreList.Count; i++)
             {
-                Array.Resize(ref dataxScatter, dataxScatter.Length + 1);
-                Array.Resize(ref datayScatter, datayScatter.Length + 1);
-                double id = Convert.ToDouble(_viewModel.ChoreList[i].ID);
-                dataxScatter[i] = id;
-                datayScatter[i] = _viewModel.ChoreList[i].Weight;
+                Array.Resize(ref values_choreWeight, values_choreWeight.Length + 1);
+                Chore chores = _viewModel.ChoreList[i];
+                values_choreWeight[i] = i + 1; // user.CompletedChores.Count;
+                names_ChoreWeight.Add(chores.Name);
             }
-            var lines = this.Scatter_Graph.Plot.Add.Scatter(dataxScatter, datayScatter);
-            lines.LegendText = "Chore Weight";
-            this.Scatter_Graph.Plot.Grid.MajorLineColor = Color.FromHex("#0e3d54");
-            this.Scatter_Graph.Plot.FigureBackground.Color = Color.FromHex("#07263b");
-            this.Scatter_Graph.Plot.DataBackground.Color = Color.FromHex("#0b3049");
-            this.Scatter_Graph.Plot.Axes.Color(Color.FromHex("#a0acb5"));
+            Bar_choreWeight_Graph.Plot.Add.Bars(values_choreWeight);
+
+            // Add names of chores as X-axis ticks
+            var tickPositions1 = new double[_viewModel.ChoreList.Count];
+            for (int i = 0; i < _viewModel.ChoreList.Count; i++)
+            {
+                tickPositions1[i] = i;
+            }
+            var tickGenerator1 = new ScottPlot.TickGenerators.NumericManual(tickPositions1, names_ChoreWeight.ToArray());
+            Bar_choreWeight_Graph.Plot.Axes.Bottom.TickGenerator = tickGenerator1;
+
+            // style the bar chart for the chore weights
+            this.Bar_choreWeight_Graph.Plot.XLabel("Chores");
+            this.Bar_choreWeight_Graph.Plot.YLabel("Chore weight");
+            this.Bar_choreWeight_Graph.Plot.Title("Chore Weighting");
+            this.Bar_choreWeight_Graph.Plot.Grid.MajorLineColor = Color.FromHex("#0e3d54");
+            this.Bar_choreWeight_Graph.Plot.FigureBackground.Color = Color.FromHex("#07263b");
+            this.Bar_choreWeight_Graph.Plot.DataBackground.Color = Color.FromHex("#0b3049");
+            this.Bar_choreWeight_Graph.Plot.Axes.Color(Color.FromHex("#a0acb5"));
 
 
-            //bar chart
+            //bar chart for amount of chores completed per person
             double[] values = { };
             List<String> names = new List<String>();
             Tick[] ticks = new Tick[_viewModel.PersonList.Count()];
@@ -312,7 +364,7 @@ namespace CrapApple
                 values[i] = i + 1; // user.CompletedChores.Count;
                 names.Add(user.Forename);
             }
-            var barPlot = Bar_Chart.Plot.Add.Bars(values);
+            Bar_Chart.Plot.Add.Bars(values);
 
             // Add forenames as X-axis ticks
             var tickPositions = new double[_viewModel.PersonList.Count];
@@ -320,16 +372,10 @@ namespace CrapApple
             {
                 tickPositions[i] = i;
             }
-
             var tickGenerator = new ScottPlot.TickGenerators.NumericManual(tickPositions, names.ToArray());
             Bar_Chart.Plot.Axes.Bottom.TickGenerator = tickGenerator;
 
-            int barIndex = 0;
-            foreach (var bar in barPlot.Bars)
-            {
-                bar.Label = names[barIndex];
-                barIndex++;
-            }
+            // add styling for bar chart for chores completed per person
             this.Bar_Chart.Plot.XLabel("Users");
             this.Bar_Chart.Plot.YLabel("Chores Completed");
             this.Bar_Chart.Plot.Title("Chores Completed per Person");
@@ -345,6 +391,7 @@ namespace CrapApple
                 Array.Resize(ref dataxPie, dataxPie.Length + 1);
                 dataxPie[dataxPie.Length - 1] = user.TotalChores - user.AssignedChores.Count;
             }
+            // create graph and style the pie chart
             this.Pie_Chart.Plot.Add.Pie(dataxPie);
             this.Pie_Chart.Plot.Title("Percentage of chores completed");
             this.Pie_Chart.Plot.Grid.MajorLineColor = Color.FromHex("#0e3d54");
@@ -352,12 +399,15 @@ namespace CrapApple
             this.Pie_Chart.Plot.DataBackground.Color = Color.FromHex("#0b3049");
             this.Pie_Chart.Plot.Axes.Color(Color.FromHex("#a0acb5"));
 
-            this.Scatter_Graph.Refresh();
+            // refresh all graphs so they display correctly
+            this.Bar_choreWeight_Graph.Refresh();
             this.Bar_Chart.Refresh();
             this.Pie_Chart.Refresh();
-
         }
 
+        /// <summary>
+        /// show tutorial window if the tutorial button is clicked on stats page
+        /// </summary>
         private void Tutorial_click(object sender, RoutedEventArgs e)
         {
             Statistics_tutorial tutorial = new Statistics_tutorial();
@@ -365,7 +415,7 @@ namespace CrapApple
             this.Hide();
         }
 
-        // adding sample data
+        // adding sample data -  used to test graphs
         private void addSampleData()
         {
             _viewModel.PersonList.Clear();
@@ -398,6 +448,7 @@ namespace CrapApple
         /// 
         private void InitializeChoreCompletionView()
         {
+            // intialise all components on chore completion
             var choreCompletionView = new ChoreCompletionView();
             var choreCompletionViewModel = (ChoreCompletionViewModel)choreCompletionView.DataContext;
             _choreCompletionViewModel = new ChoreCompletionViewModel(_viewModel.PersonList);
@@ -408,11 +459,13 @@ namespace CrapApple
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            // save weekly chores when save button is clicked
             _viewModel.SaveWeeklyChores();
         }
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
+            // clear weekly chores on clear button click
             _viewModel.ClearWeeklyChores();
         }
 

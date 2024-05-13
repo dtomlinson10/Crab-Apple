@@ -10,7 +10,9 @@ using System.Threading.Tasks;
 
 namespace CrapApple
 {
-    //
+    /// <summary>
+    /// chore class for creating and saving new chores
+    /// </summary>
     public class Chore : INotifyPropertyChanged
     {
         public String ID;
@@ -74,11 +76,6 @@ namespace CrapApple
             this.DateOfCompletion = dateOfCompletion;
             this.IsCompleted = isCompleted;
             this.IsLate = isLate;
-        }
-
-        public void addToDatabase(DbConnection conn)
-        {
-            // db connection needs to be implemented
         }
     }
 }

@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace CrapApple
 {
+    /// <summary>
+    /// regular user class to create and save regular users
+    /// and get access to data of the users for data representation
+    /// </summary>
     public class RegularUser : User
     {
         public string Id { get; set; }
