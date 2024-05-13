@@ -86,7 +86,7 @@
                         <Button x:Name="Collect_Rewards_Button" Content="Collect points!" HorizontalAlignment="Left" Height="51" Margin="383,40,0,0" VerticalAlignment="Top" Width="150" Background="DarkSeaGreen" Click="Collect_Rewards_Button_Click"/>
                         <ListBox x:Name="Rewards_display" HorizontalAlignment="Left" Height="85" Margin="71,30,0,0" VerticalAlignment="Top" Width="179" Background="DarkSeaGreen" d:ItemsSource="{d:SampleData ItemCount=5}"/>
                         <Label x:Name="Rewards_heading" Content="Rewards" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="95" Background="DarkSeaGreen"/>
-                        <Label Content="Points collected:" Margin="254,46,168,32" Background="DarkSeaGreen"/>
+                        <Label x:Name="points_display" Content="Points collected:" Margin="254,46,168,32" Background="DarkSeaGreen"/>
                     </Grid>
                 </Grid>
             </TabItem>
@@ -97,10 +97,11 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Label x:Name="statLogInError" Content="Please log in as an Administrator to access this feature!" HorizontalAlignment="Left" Margin="247,134,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-                    <ScottPlot:WpfPlot x:Name="Scatter_Graph" Width="250" Height="150" Margin="14,82,133,134" />
-                    <ScottPlot:WpfPlot x:Name="Bar_Chart" Width="250" Height="150" Margin="272,82,272,134" Grid.ColumnSpan="2" />
-                    <ScottPlot:WpfPlot x:Name="Pie_Chart" Width="250" Height="150" Margin="137,82,10,134" Grid.Column="1" />
+                    <ScottPlot:WpfPlot x:Name="Scatter_Graph" Margin="5,5,119,116" Background="DarkSeaGreen"/>
+                    <ScottPlot:WpfPlot x:Name="Bar_Chart" Margin="256,112,256,-2" Grid.ColumnSpan="2" Background="DarkSeaGreen"/>
+                    <ScottPlot:WpfPlot x:Name="Pie_Chart" Margin="106,7,10,104" Grid.Column="1" Background="DarkSeaGreen"/>
                     <Button Content="Tutorial" HorizontalAlignment="Left" Height="58" Margin="73,264,0,0" VerticalAlignment="Top" Width="153" Click="Tutorial_click" Background="DarkSeaGreen"/>
+                    <Label Grid.Column="1" Content="" HorizontalAlignment="Left" Height="95" Margin="193,263,0,0" VerticalAlignment="Top" Width="197" Background="DarkSeaGreen"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="ChoreManagement" Header="Chore Management">
