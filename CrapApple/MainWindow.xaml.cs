@@ -70,7 +70,8 @@ namespace CrapApple
 
             names_display.ItemsSource = _viewModel.PersonList;
             names_display.DisplayMemberPath = "Forename";
-            leaderboard_display.ItemsSource = _viewModel.PersonList;
+            var orderedList = _viewModel.PersonList.OrderByDescending(user => user.CompletedChores.Count).ToList();
+            leaderboard_display.ItemsSource = orderedList;
         }
 
         private void HideAdminFunctionality()
@@ -253,7 +254,7 @@ namespace CrapApple
         {
            
             double points = 0;
-            User selectedUser = _viewModel.SelectedUser;
+            User selectedUser = (User)names_display.SelectedValue;
             foreach (var i in _viewModel.ChoreList)
             {
                 if (selectedUser != null)
@@ -317,12 +318,6 @@ namespace CrapApple
             var tickGenerator = new ScottPlot.TickGenerators.NumericManual(tickPositions, names.ToArray());
             Bar_Chart.Plot.Axes.Bottom.TickGenerator = tickGenerator;
 
-            int barIndex = 0;
-            foreach (var bar in barPlot.Bars)
-            {
-                bar.Label = names[barIndex];
-                barIndex++;
-            }
             this.Bar_Chart.Plot.XLabel("Users");
             this.Bar_Chart.Plot.YLabel("Chores Completed");
             this.Bar_Chart.Plot.Title("Chores Completed per Person");
@@ -348,6 +343,24 @@ namespace CrapApple
             this.Scatter_Graph.Refresh();
             this.Bar_Chart.Refresh();
             this.Pie_Chart.Refresh();
+
+            float choresTotal = 0;
+            float choresCompleted = 0;
+            
+            foreach( var i in _viewModel.ChoreList )
+            {
+                if(i.IsCompleted == true)
+                {
+                    choresTotal++;
+                    choresCompleted++;
+                }
+                else
+                {
+                    choresCompleted++;
+                }
+            }
+            
+            pie_label_display.Content = "Chores percentage: " + ((choresCompleted/choresTotal)*100) + "%\n" +"Chores Completed: " + choresCompleted+ "/" + choresTotal + "\n" ;
 
         }
 
@@ -394,7 +407,5 @@ namespace CrapApple
         {
             _viewModel.ClearWeeklyChores();
         }
-
-        
     }
 }

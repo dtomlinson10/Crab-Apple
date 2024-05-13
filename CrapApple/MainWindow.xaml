@@ -101,7 +101,7 @@
                     <ScottPlot:WpfPlot x:Name="Bar_Chart" Margin="256,112,256,-2" Grid.ColumnSpan="2" Background="DarkSeaGreen"/>
                     <ScottPlot:WpfPlot x:Name="Pie_Chart" Margin="106,7,10,104" Grid.Column="1" Background="DarkSeaGreen"/>
                     <Button Content="Tutorial" HorizontalAlignment="Left" Height="58" Margin="73,264,0,0" VerticalAlignment="Top" Width="153" Click="Tutorial_click" Background="DarkSeaGreen"/>
-                    <Label Grid.Column="1" Content="" HorizontalAlignment="Left" Height="95" Margin="193,263,0,0" VerticalAlignment="Top" Width="197" Background="DarkSeaGreen"/>
+                    <Label x:Name="pie_label_display" Grid.Column="1" Content="" HorizontalAlignment="Left" Height="95" Margin="193,263,0,0" VerticalAlignment="Top" Width="197" Background="DarkSeaGreen"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="ChoreManagement" Header="Chore Management">
