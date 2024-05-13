@@ -307,8 +307,6 @@ namespace CrapApple
             }
             var barPlot = Bar_Chart.Plot.Add.Bars(values);
 
-            
-
             // Add forenames as X-axis ticks
             var tickPositions = new double[_viewModel.PersonList.Count];
             for (int i = 0; i < _viewModel.PersonList.Count; i++)
@@ -316,7 +314,6 @@ namespace CrapApple
                 tickPositions[i] = i;
             }
 
-            // Use NumericManual tick generator with custom labels
             var tickGenerator = new ScottPlot.TickGenerators.NumericManual(tickPositions, names.ToArray());
             Bar_Chart.Plot.Axes.Bottom.TickGenerator = tickGenerator;
 
@@ -325,7 +322,6 @@ namespace CrapApple
             {
                 bar.Label = names[barIndex];
                 barIndex++;
-                barPlot.Axes.XAxis.TickGenerator = new ScottPlot.TickGenerators.NumericManual(ticks);
             }
             this.Bar_Chart.Plot.XLabel("Users");
             this.Bar_Chart.Plot.YLabel("Chores Completed");
@@ -334,47 +330,6 @@ namespace CrapApple
             this.Bar_Chart.Plot.FigureBackground.Color = Color.FromHex("#07263b");
             this.Bar_Chart.Plot.DataBackground.Color = Color.FromHex("#0b3049");
             this.Bar_Chart.Plot.Axes.Color(Color.FromHex("#a0acb5"));
-
-
-
-            //double[] values = new double[_viewModel.PersonList.Count];
-            //List<string> names = new List<string>();
-
-            //// Populate values and names
-            //for (int i = 0; i < _viewModel.PersonList.Count; i++)
-            //{
-            //    User user = _viewModel.PersonList[i];
-            //    values[i] = user.CompletedChores.Count; // Assuming CompletedChores is a List in User class
-            //    names.Add(user.Forename);
-            //}
-
-            //// Add bars to the plot
-            //var barPlot = Bar_Chart.Plot.Add.Bars(values);
-
-            //// Add forenames as X-axis ticks
-            //var tickPositions = new double[_viewModel.PersonList.Count];
-            //for (int i = 0; i < _viewModel.PersonList.Count; i++)
-            //{
-            //    tickPositions[i] = i;
-            //}
-
-            //// Use NumericManual tick generator with custom labels
-            //var tickGenerator = new ScottPlot.TickGenerators.NumericManual(tickPositions, names.ToArray());
-            //Bar_Chart.Plot.Axes.Bottom.TickGenerator = tickGenerator;
-
-            //// Customize plot appearance
-            //Bar_Chart.Plot.XLabel("Users");
-            //Bar_Chart.Plot.YLabel("Chores Completed");
-            //Bar_Chart.Plot.Title("Chores Completed per Person");
-            //Bar_Chart.Plot.Grid.MajorLineColor = Color.FromHex("#0e3d54");
-            //Bar_Chart.Plot.FigureBackground.Color = Color.FromHex("#07263b");
-            //Bar_Chart.Plot.DataBackground.Color = Color.FromHex("#0b3049");
-            //Bar_Chart.Plot.Axes.Color(Color.FromHex("#a0acb5"));
-
-            //// Render the plot
-            //Bar_Chart.Refresh();
-
-
 
             //pie chart
             double[] dataxPie = new double[0];
@@ -389,7 +344,6 @@ namespace CrapApple
             this.Pie_Chart.Plot.FigureBackground.Color = Color.FromHex("#07263b");
             this.Pie_Chart.Plot.DataBackground.Color = Color.FromHex("#0b3049");
             this.Pie_Chart.Plot.Axes.Color(Color.FromHex("#a0acb5"));
-
 
             this.Scatter_Graph.Refresh();
             this.Bar_Chart.Refresh();
