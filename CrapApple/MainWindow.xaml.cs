@@ -30,7 +30,7 @@ namespace CrapApple
             DBConnection dBConnection = new();
             // dBConnection.GetUsers();
 
-            InitializeData(dBConnection, false);
+            InitializeData(dBConnection, true);
             SetInitialVisibility();
             addRewardsDisplay();
             addGraph(dBConnection);

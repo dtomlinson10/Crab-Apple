@@ -23,9 +23,11 @@ namespace CrapApple
             String noun = nounList[nounIndex];
             String choreName = verb + " the " + noun;
             string id = idIterator.ToString();
+            DateOnly today = DateOnly.FromDateTime(DateTime.Now);
+            DateOnly nextWeek = today.AddDays(7);
 
             //create new chore
-            return new Chore(id, choreName, "A chore to " + verb + " the " + noun, 1, null, DateOnly.FromDateTime(DateTime.Now), false, false);
+            return new Chore(id, choreName, "A chore to " + verb + " the " + noun, rnd.Next(1, 7), null, nextWeek, false, false);
         }
     }
 }

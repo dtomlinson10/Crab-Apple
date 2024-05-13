@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 
 namespace CrapApple
@@ -301,8 +302,16 @@ namespace CrapApple
                     // Fix the issue with DateTime -> DateOnly
                     String userID = result.GetString(4);
                     User user = userList.FirstOrDefault(u => u.Id == userID);
-                    DateOnly dateOnly = DateOnly.FromDateTime(result.GetDateTime(5));
-                    chores.Add(new Chore(result.GetValue(0).ToString(), result.GetString(1), result.GetString(2), (int)result.GetDouble(3), user, dateOnly, result.GetBoolean(6), result.GetBoolean(7)));
+                    Debug.WriteLine(result.GetString(5));
+                    DateOnly dateOnly = DateOnly.Parse(result.GetString(5));
+                    chores.Add(new Chore(result.GetValue(0).ToString(), 
+                        result.GetString(1), 
+                        result.GetString(2), 
+                        (int)result.GetDouble(3), 
+                        user!, 
+                        dateOnly, 
+                        Convert.ToBoolean(result.GetValue(6)), 
+                        Convert.ToBoolean(result.GetValue(7))));
                 }
             }
             else
