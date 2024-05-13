@@ -1,0 +1,65 @@
+﻿<!-- ChoreCompletionView.xaml -->
+<UserControl x:Class="CrapApple.ChoreCompletionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ComboBox x:Name="UserComboBox" ItemsSource="{Binding PersonList}" DisplayMemberPath="Forename" SelectedItem="{Binding SelectedUser}" Margin="10"/>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <GroupBox Header="Assigned Chores" Margin="10">
+                <ListBox ItemsSource="{Binding AssignedChores}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox Content="{Binding Name}" IsChecked="{Binding IsCompleted}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </GroupBox>
+
+            <GroupBox Header="Completed Chore Logs" Grid.Row="1" Grid.Column="2" Margin="10">
+                <ListBox ItemsSource="{Binding CompletedChoreLogs}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding ChoreName}"/>
+                                <TextBlock Text="{Binding UserName}"/>
+                                <TextBlock Text="{Binding CompletionDate, StringFormat='Completed on {0:yyyy-MM-dd}'}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </GroupBox>
+
+            <GroupBox Header="Optional Chores" Grid.Column="1" Margin="10">
+                <ListBox ItemsSource="{Binding OptionalChores}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox Content="{Binding Name}" IsChecked="{Binding IsCompleted}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </GroupBox>
+
+            <GroupBox Header="Completed Chores" Grid.Column="2" Margin="10">
+                <ListBox ItemsSource="{Binding CompletedChores}"/>
+            </GroupBox>
+        </Grid>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+            <Button Content="Mark as Complete" Command="{Binding MarkAsCompleteCommand}" Margin="0,0,10,0"/>
+            <TextBlock Text="{Binding EndOfWeekAlertMessage}" Foreground="Red" FontWeight="Bold"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

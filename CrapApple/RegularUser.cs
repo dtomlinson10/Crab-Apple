@@ -12,6 +12,7 @@ namespace CrapApple
         public string Password { get; set; }
         public List<Chore>? CompletedChores { get; set; }
         public List<Chore>? AssignedChores { get; set; }
+        public List<Chore> OptionalChores { get; set; } = new List<Chore>();
         public int TotalChores { get; set; }
 
         public RegularUser(string id, string forename, string surname, string email, string password)
@@ -25,7 +26,7 @@ namespace CrapApple
             CompletedChores = new List<Chore>();
             TotalChores = 0;
         }
-        
+
         public RegularUser(string id, string forename, string surname, string email, string password, List<Chore> completedChores, List<Chore> assignedChores, int totalChores)
         {
             Id = id;
@@ -42,9 +43,14 @@ namespace CrapApple
         {
             choreToComplete.IsCompleted = true;
             AssignedChores.Remove(choreToComplete);
+            OptionalChores.Remove(choreToComplete);
             CompletedChores.Add(choreToComplete);
 
-            db.RunSQL("UPDATE Chores SET IsCompleted = 1 WHERE ChoreId = " + choreToComplete.ID);
+            db.ModifyChore(choreToComplete);
+
+            // Log the completed chore in the database
+            string sql = $"INSERT INTO CompletedChores(choreId, userId, completionDate) VALUES ({choreToComplete.ID}, {Id}, '{DateTime.Today.ToString("yyyy-MM-dd")}');";
+            db.RunSQL(sql);
         }
     }
 }

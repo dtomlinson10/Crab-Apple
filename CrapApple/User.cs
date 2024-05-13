@@ -13,7 +13,21 @@ namespace CrapApple
         public List<Chore> CompletedChores { get; }
         public int TotalChores { get; }
         public string Password { get; }
+        List<Chore> OptionalChores { get; set; }
+        //void CompleteChore(Chore choreToComplete, DBConnection db);
 
-        void CompleteChore(Chore choreToComplete, DBConnection db);
+        public void CompleteChore(Chore choreToComplete, DBConnection db)
+        {
+            //choreToComplete.IsCompleted = true;
+            //AssignedChores.Remove(choreToComplete);
+            //OptionalChores.Remove(choreToComplete);
+            //CompletedChores.Add(choreToComplete);
+
+            //db.ModifyChore(choreToComplete);
+
+            // Log the completed chore in the database
+            //string sql = $"INSERT INTO CompletedChores(choreId, userId, completionDate) VALUES ({choreToComplete.ID}, {Id}, '{DateTime.Today.ToString("yyyy-MM-dd")}');";
+            //db.RunSQL(sql);///
+        }
     }
 }

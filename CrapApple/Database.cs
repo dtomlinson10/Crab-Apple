@@ -179,20 +179,20 @@ namespace CrapApple
                         foreach (string choreId in assignedChoreIds)
                         {
                             // Fetch chore from database using choreId and add to assignedChores
-                           // Chore chore = FetchChoreFromDatabase(choreId);
+                            // Chore chore = FetchChoreFromDatabase(choreId);
                             //if (chore != null)
-                               // assignedChores.Add(chore);
+                            // assignedChores.Add(chore);
                         }
 
                         foreach (string choreId in completedChoreIds)
                         {
                             // Fetch chore from database using choreId and add to completedChores
-                           // Chore chore = FetchChoreFromDatabase(choreId);
-                           // if (chore != null)
-                               // completedChores.Add(chore);
+                            // Chore chore = FetchChoreFromDatabase(choreId);
+                            // if (chore != null)
+                            // completedChores.Add(chore);
                         }
 
-                       // Create Admin object and add to users
+                        // Create Admin object and add to users
                         users.Add(new Admin(
                             result.GetValue(0).ToString(),
                             result.GetString(1),
@@ -228,7 +228,7 @@ namespace CrapApple
         // Helper method to fetch chore from the database
         private void FetchChoreFromDatabase(string choreId)
         {
-           
+
         }
 
 
@@ -311,6 +311,45 @@ namespace CrapApple
             }
 
             return chores;
+        }
+
+        /// <summary>
+        /// adds weekly chores to weekly chore table
+        /// </summary>
+        public void AddWeeklyChore(Chore chore)
+        {
+            string sql = $"INSERT INTO WeeklyChores(name, estimatedTime) VALUES ('{chore.Name}','{chore.EstimatedTime}');";
+
+            RunSQL(sql);
+        }
+
+        public ObservableCollection<CompletedChoreLog> GetCompletedChoreLogs()
+        {
+            ObservableCollection<CompletedChoreLog> completedChoreLogs = new ObservableCollection<CompletedChoreLog>();
+
+            string sql = @"
+        SELECT c.name AS ChoreName, u.forename AS UserName, cc.completionDate AS CompletionDate
+        FROM CompletedChores cc
+        JOIN Chores c ON cc.choreId = c.choreId
+        JOIN Users u ON cc.userId = u.userId
+        ORDER BY cc.completionDate DESC;";
+
+            SQLiteDataReader? result = RunSQLQuery(sql);
+
+            if (result != null)
+            {
+                while (result.Read())
+                {
+                    completedChoreLogs.Add(new CompletedChoreLog
+                    {
+                        ChoreName = result.GetString(0),
+                        UserName = result.GetString(1),
+                        CompletionDate = result.GetDateTime(2)
+                    });
+                }
+            }
+
+            return completedChoreLogs;
         }
     }
 }

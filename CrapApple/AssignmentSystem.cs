@@ -28,6 +28,29 @@ namespace CrapApple
         /// <summary>
         /// ///////////////
         /// </summary>
+        /// 
+
+        public void DistributeWeeklyChores(List<Chore> weeklyChores, List<User> users)
+        {
+            var random = new Random();
+            var shuffledChores = weeklyChores.OrderBy(x => random.Next()).ToList();
+
+            int userIndex = 0;
+            foreach (var chore in shuffledChores)
+            {
+                if (userIndex >= users.Count)
+                {
+                    userIndex = 0;
+                }
+
+                users[userIndex].OptionalChores.Add(chore);
+                userIndex++;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
 
 
         public void rankChores(List<Chore> choresList)

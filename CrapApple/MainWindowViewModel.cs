@@ -234,10 +234,47 @@ namespace CrapApple
             MessageBox.Show("Weekly chores cleared successfully!");
         }
 
+        /// <summary>
+        /// method updated 
+        /// </summary>
         public void SaveWeeklyChores()
         {
-            //here; have weekly chores to the SQLite database
+            DBConnection db = new DBConnection();
+            db.Connect("Database/crabapple.db");
+
+            foreach (var chore in WeeklyChoresList)
+            {
+                db.AddWeeklyChore(chore);
+            }
+
+            db.Disconnect();
+
+            // Distribute weekly chores among users' optional chores
+            DistributeWeeklyChores(WeeklyChoresList.ToList(), PersonList.ToList());
+
+            // Clear the weekly chores list after saving
+            WeeklyChoresList.Clear();
+
+            // Refresh the UI or perform any necessary logic
             OnPropertyChanged(nameof(WeeklyChoresList));
+        }
+
+        public void DistributeWeeklyChores(List<Chore> weeklyChores, List<User> users)
+        {
+            var random = new Random();
+            var shuffledChores = weeklyChores.OrderBy(x => random.Next()).ToList();
+
+            int userIndex = 0;
+            foreach (var chore in shuffledChores)
+            {
+                if (userIndex >= users.Count)
+                {
+                    userIndex = 0;
+                }
+
+                users[userIndex].OptionalChores.Add(chore);
+                userIndex++;
+            }
         }
 
         protected virtual void OnPropertyChanged(string propertyName)

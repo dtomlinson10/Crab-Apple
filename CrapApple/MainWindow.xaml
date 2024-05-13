@@ -101,9 +101,10 @@
                     <ScottPlot:WpfPlot x:Name="Bar_Chart" Margin="256,112,256,-2" Grid.ColumnSpan="2" Background="DarkSeaGreen"/>
                     <ScottPlot:WpfPlot x:Name="Pie_Chart" Margin="106,7,10,104" Grid.Column="1" Background="DarkSeaGreen"/>
                     <Button Content="Tutorial" HorizontalAlignment="Left" Height="58" Margin="73,264,0,0" VerticalAlignment="Top" Width="153" Click="Tutorial_click" Background="DarkSeaGreen"/>
-                    <Label x:Name="pie_label_display" Grid.Column="1" Content="" HorizontalAlignment="Left" Height="95" Margin="193,263,0,0" VerticalAlignment="Top" Width="197" Background="DarkSeaGreen"/>
+                    <Label Grid.Column="1" Content="" HorizontalAlignment="Left" Height="95" Margin="193,263,0,0" VerticalAlignment="Top" Width="197" Background="DarkSeaGreen"/>
                 </Grid>
             </TabItem>
+            <!--choreManagment nested tabs-->
             <TabItem x:Name="ChoreManagement" Header="Chore Management">
                 <Grid>
                     <TabControl>
@@ -184,7 +185,58 @@
                     </TabControl>
                 </Grid>
             </TabItem>
+
+            <TabItem x:Name="ChoreCompletion" Header="Chore Completion">
+                <Grid>
+                    <!--Chore Completion UI elements-->
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <ComboBox x:Name="UserComboBox" ItemsSource="{Binding PersonList}" DisplayMemberPath="Forename" SelectedItem="{Binding SelectedUser}" Margin="10"/>
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <GroupBox Header="Assigned Chores" Margin="10">
+                            <ListBox ItemsSource="{Binding AssignedChores}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Content="{Binding Name}" IsChecked="{Binding IsCompleted}"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </GroupBox>
+
+                        <GroupBox Header="Optional Chores" Grid.Column="1" Margin="10">
+                            <ListBox ItemsSource="{Binding OptionalChores}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Content="{Binding Name}" IsChecked="{Binding IsCompleted}"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </GroupBox>
+
+                        <GroupBox Header="Completed Chores" Grid.Column="2" Margin="10">
+                            <ListBox ItemsSource="{Binding CompletedChores}"/>
+                        </GroupBox>
+                    </Grid>
+
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+                        <Button Content="Mark as Complete" Command="{Binding MarkAsCompleteCommand}" Margin="0,0,10,0"/>
+                        <TextBlock Text="{Binding EndOfWeekAlertMessage}" Foreground="Red" FontWeight="Bold"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
         </TabControl>
+
         <StackPanel x:Name="loginPanel" HorizontalAlignment="Right" Margin="0,10,10,0" Orientation="Horizontal" VerticalAlignment="Top">
             <Label x:Name="loginLabel" Content="Log in"/>
             <TextBox x:Name="loginEmail" TextWrapping="Wrap" Text="Email" Width="120"/>

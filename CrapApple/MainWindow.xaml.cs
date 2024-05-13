@@ -18,6 +18,8 @@ namespace CrapApple
         private MainWindowViewModel _viewModel;
         private List<String> rewardsList { get; set; }
 
+        private ChoreCompletionViewModel _choreCompletionViewModel;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -33,6 +35,11 @@ namespace CrapApple
             addRewardsDisplay();
             addGraph(dBConnection);
             ShowAdminFunctionality();
+
+            _choreCompletionViewModel = new CrapApple.ChoreCompletionViewModel(_viewModel.PersonList);
+            UserComboBox.DataContext = _choreCompletionViewModel;
+
+            InitializeChoreCompletionView();
         }
 
         private void InitializeData(DBConnection conn, bool choresNeeded)
@@ -62,7 +69,7 @@ namespace CrapApple
             //set the data sources for various data grids and combo boxes
             usersDataGrid.ItemsSource = _viewModel.PersonList;
             choresDataGrid.ItemsSource = _viewModel.ChoreList;
-            
+
             selectUserCB.DisplayMemberPath = "Forename";
             selectUserCB.ItemsSource = _viewModel.PersonList;
             selectChoreCB.DisplayMemberPath = "Name";
@@ -70,8 +77,7 @@ namespace CrapApple
 
             names_display.ItemsSource = _viewModel.PersonList;
             names_display.DisplayMemberPath = "Forename";
-            var orderedList = _viewModel.PersonList.OrderByDescending(user => user.CompletedChores.Count).ToList();
-            leaderboard_display.ItemsSource = orderedList;
+            leaderboard_display.ItemsSource = _viewModel.PersonList;
         }
 
         private void HideAdminFunctionality()
@@ -252,9 +258,9 @@ namespace CrapApple
 
         private void Collect_Rewards_Button_Click(object sender, RoutedEventArgs e)
         {
-           
+
             double points = 0;
-            User selectedUser = (User)names_display.SelectedValue;
+            User selectedUser = _viewModel.SelectedUser;
             foreach (var i in _viewModel.ChoreList)
             {
                 if (selectedUser != null)
@@ -318,6 +324,12 @@ namespace CrapApple
             var tickGenerator = new ScottPlot.TickGenerators.NumericManual(tickPositions, names.ToArray());
             Bar_Chart.Plot.Axes.Bottom.TickGenerator = tickGenerator;
 
+            int barIndex = 0;
+            foreach (var bar in barPlot.Bars)
+            {
+                bar.Label = names[barIndex];
+                barIndex++;
+            }
             this.Bar_Chart.Plot.XLabel("Users");
             this.Bar_Chart.Plot.YLabel("Chores Completed");
             this.Bar_Chart.Plot.Title("Chores Completed per Person");
@@ -343,24 +355,6 @@ namespace CrapApple
             this.Scatter_Graph.Refresh();
             this.Bar_Chart.Refresh();
             this.Pie_Chart.Refresh();
-
-            float choresTotal = 0;
-            float choresCompleted = 0;
-            
-            foreach( var i in _viewModel.ChoreList )
-            {
-                if(i.IsCompleted == true)
-                {
-                    choresTotal++;
-                    choresCompleted++;
-                }
-                else
-                {
-                    choresCompleted++;
-                }
-            }
-            
-            pie_label_display.Content = "Chores percentage: " + ((choresCompleted/choresTotal)*100) + "%\n" +"Chores Completed: " + choresCompleted+ "/" + choresTotal + "\n" ;
 
         }
 
@@ -398,6 +392,20 @@ namespace CrapApple
             e.Handled = !InputValidationUtil.ValidateEstimatedTime(e.Text, out _);
         }
 
+        /// <summary>
+        /// save saves to weeklyChores table then clears grid display, clear button clears grid display
+        /// </summary>
+        /// 
+        private void InitializeChoreCompletionView()
+        {
+            var choreCompletionView = new ChoreCompletionView();
+            var choreCompletionViewModel = (ChoreCompletionViewModel)choreCompletionView.DataContext;
+            _choreCompletionViewModel = new ChoreCompletionViewModel(_viewModel.PersonList);
+
+            var choreCompletionGrid = (Grid)ChoreCompletion.Content;
+            choreCompletionGrid.Children.Add(choreCompletionView);
+        }
+
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.SaveWeeklyChores();
@@ -407,5 +415,7 @@ namespace CrapApple
         {
             _viewModel.ClearWeeklyChores();
         }
+
+
     }
 }
