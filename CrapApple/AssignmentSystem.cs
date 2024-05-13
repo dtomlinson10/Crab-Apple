@@ -76,13 +76,10 @@ namespace CrapApple
 
 
                 User currentUser = userList[currentUserIndex];
-                if (currentUser is RegularUser regularUser)
 
-                {
-                    regularUser.AssignedChores.Add(chore);
-                    currentUserIndex++;
-                    Debug.WriteLine($"Assigned chore {chore.Name} to user {regularUser.Forename} {regularUser.Surname}");
-                }
+                currentUser.AssignedChores.Add(chore);
+                currentUserIndex++;
+                Debug.WriteLine($"Assigned chore {chore.Name} to user {currentUser.Forename} {currentUser.Surname}");
             }
 
             StringBuilder sb = new StringBuilder();

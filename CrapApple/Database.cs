@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
+using System.Text;
 
 namespace CrapApple
 {
@@ -114,14 +114,18 @@ namespace CrapApple
         {
             string sql;
             if (user is Admin)
-            {
+            {    
                 Admin adminUser = (Admin)user;
-                sql = $"UPDATE Users SET forename = '{adminUser.Forename}', surname = '{adminUser.Surname}', email = '{adminUser.Email}', assignedChores = '{adminUser.AssignedChores}', completedChores = '{adminUser.CompletedChores}', totalChores = '{adminUser.TotalChores}', role = 'admin', password = '{adminUser.Password}' WHERE id = '{adminUser.Id}';";
-            }
+                string assignedChoresIds = string.Join(",", adminUser.AssignedChores.Select(chore => chore.ID));
+                string completedChoresIds = string.Join(",", adminUser.CompletedChores.Select(chore => chore.ID));
+                sql = $"UPDATE Users SET forename = '{adminUser.Forename}', surname = '{adminUser.Surname}', email = '{adminUser.Email}', assignedChores = '{assignedChoresIds}', completedChores = '{completedChoresIds}', totalChores = '{adminUser.TotalChores}', role = 'admin', password = '{adminUser.Password}' WHERE userId = '{adminUser.Id}';";
+            }                                                                                                       
             else
             {
                 RegularUser regularUser = (RegularUser)user;
-                sql = $"UPDATE Users SET forename = '{regularUser.Forename}', surname = '{regularUser.Surname}', email = '{regularUser.Email}', assignedChores = '{regularUser.AssignedChores}', completedChores = '{regularUser.CompletedChores}', totalChores = '{regularUser.TotalChores}', role = 'user', password = '{regularUser.Password}' WHERE id = '{regularUser.Id}';";
+                string assignedChoresIds = string.Join(",", regularUser.AssignedChores.Select(chore => chore.ID));
+                string completedChoresIds = string.Join(",", regularUser.CompletedChores.Select(chore => chore.ID));
+                sql = $"UPDATE Users SET forename = '{regularUser.Forename}', surname = '{regularUser.Surname}', email = '{regularUser.Email}', assignedChores = '{regularUser.AssignedChores}', completedChores = '{regularUser.CompletedChores}', totalChores = '{regularUser.TotalChores}', role = 'user', password = '{regularUser.Password}' WHERE userId = '{regularUser.Id}';";
             }
 
             DBConnection conn = new DBConnection();
@@ -167,14 +171,14 @@ namespace CrapApple
             {
                 while (result.Read())
                 {
-                    if (result.GetString(7) == "admin")
+                    List<Chore> assignedChores = new List<Chore>();
+                    List<Chore> completedChores = new List<Chore>();
+                    if (!result.IsDBNull(4) && !result.IsDBNull(5))
                     {
+                        Debug.WriteLine(result.GetString(4));
                         // Split assignedChores and completedChores into ids
-                        string[] assignedChoreIds = result.GetString(8).Split(',');
-                        string[] completedChoreIds = result.GetString(9).Split(',');
-
-                        List<Chore> assignedChores = new List<Chore>();
-                        List<Chore> completedChores = new List<Chore>();
+                        string[] assignedChoreIds = result.GetString(4).Split(',');
+                        string[] completedChoreIds = result.GetString(5).Split(',');
 
                         // Retrieve chores from database based on ids
                         foreach (string choreId in assignedChoreIds)
@@ -192,17 +196,25 @@ namespace CrapApple
                             if (chore != null)
                                 completedChores.Add(chore);
                         }
+                    }
+                    else
+                    {
+                        completedChores = new List<Chore>();
+                        assignedChores = new List<Chore>();
+                    }
 
+                    if (result.GetString(7) == "admin")
+                    {
                         // Create Admin object and add to users
                         users.Add(new Admin(
                             result.GetValue(0).ToString(),
                             result.GetString(1),
                             result.GetString(2),
                             result.GetString(3),
-                            result.GetString(4),
+                            result.GetString(8),
                             completedChores,
                             assignedChores,
-                            (int)result.GetValue(7)
+                            Convert.ToInt32(result.GetValue(6))
                         ));
                     }
                     else
@@ -213,7 +225,10 @@ namespace CrapApple
                             result.GetString(1),
                             result.GetString(2),
                             result.GetString(3),
-                            result.GetString(8)
+                            result.GetString(8),
+                            completedChores,
+                            assignedChores,
+                            Convert.ToInt32(result.GetInt32(6))
                         ));
                     }
                 }
@@ -241,15 +256,16 @@ namespace CrapApple
             {
                 while (result.Read())
                 {
-                     Chore chore = new Chore(result.GetValue(0).ToString(), result.GetString(1), result.GetString(2), (int)result.GetValue(3), null, dateOnly, Convert.ToBoolean(result.GetValue(6)), Convert.ToBoolean(result.GetValue(7)));
+                    Chore chore = new Chore(result.GetValue(0).ToString(), result.GetString(1), result.GetString(2), (int)result.GetValue(3), null, dateOnly, Convert.ToBoolean(result.GetValue(6)), Convert.ToBoolean(result.GetValue(7)));
                     return chore;
                 }
-            } else
+            }
+            else
             {
                 Debug.WriteLine("Cannot get chore.");
             }
             return null;
-            
+
         }
 
 
@@ -324,13 +340,13 @@ namespace CrapApple
                     User user = userList.FirstOrDefault(u => u.Id == userID);
                     Debug.WriteLine(result.GetString(5));
                     DateOnly dateOnly = DateOnly.Parse(result.GetString(5));
-                    chores.Add(new Chore(result.GetValue(0).ToString(), 
-                        result.GetString(1), 
-                        result.GetString(2), 
-                        (int)result.GetDouble(3), 
-                        user!, 
-                        dateOnly, 
-                        Convert.ToBoolean(result.GetValue(6)), 
+                    chores.Add(new Chore(result.GetValue(0).ToString(),
+                        result.GetString(1),
+                        result.GetString(2),
+                        (int)result.GetDouble(3),
+                        user!,
+                        dateOnly,
+                        Convert.ToBoolean(result.GetValue(6)),
                         Convert.ToBoolean(result.GetValue(7))));
                 }
             }

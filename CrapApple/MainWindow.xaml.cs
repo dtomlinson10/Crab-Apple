@@ -31,7 +31,7 @@ namespace CrapApple
             DBConnection dBConnection = new();
 
             // set up intial layout for each tab
-            InitializeData(dBConnection, true);
+            InitializeData(dBConnection, false);
             SetInitialVisibility();
             addRewardsDisplay();
             addGraph(dBConnection);
